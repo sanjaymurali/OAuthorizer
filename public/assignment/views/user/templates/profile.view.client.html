@@ -1,0 +1,80 @@
+<nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <a class="navbar-link" ng-click="model.update(model.user)">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+        <div class="navbar-header">
+            <div class="navbar-new-website navbar-new-website-profile">Profile</div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <h1>Profile</h1>
+
+    <div class="alert alert-danger" ng-show="model.error">
+        {{model.error}}
+    </div>
+
+    <div class="alert alert-success" ng-show="model.message">
+        {{model.message}}
+    </div>
+
+    <label for="first">First Name</label>
+    <input ng-model="model.user.firstName"
+           id="first"
+           class="form-control"
+           type="text"
+           placeholder="First Name"/>
+
+    <label for="last">Last Name</label>
+    <input ng-model="model.user.lastName"
+           id="last"
+           class="form-control"
+           type="text"
+           placeholder="Last Name"/>
+
+    <label for="email">Email</label>
+    <input ng-model="model.user.email"
+           id="email"
+           class="form-control"
+           type="email"
+           placeholder="Email"/>
+
+    <label>Username</label>
+    <input ng-model="model.user.username"
+           class="form-control"
+           type="text"
+           placeholder="Username"/>
+
+    <label>Password</label>
+    <input class="form-control" type="password" placeholder="Password"/>
+
+    <a ui-sref="website({uid:model.user._id})" class="btn btn-success btn-block">
+        Websites
+    </a>
+
+    <a ng-click="model.update(model.user)"
+       class="btn btn-primary btn-block">
+        Update
+    </a>
+
+    <a ng-click="model.unregisterUser(model.user)"
+       class="btn btn-danger btn-block">
+        Delete
+    </a>
+
+    <a class="btn btn-danger btn-block" ui-sref="login">
+        Logout
+    </a>
+</div>
+
+
+
+<nav-footer-common
+        uid="{{model.user._id}}">
+</nav-footer-common>
+

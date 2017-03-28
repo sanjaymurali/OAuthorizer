@@ -1,0 +1,31 @@
+<div class="container-fluid">
+<h1>HEADER Editor</h1>
+
+<div class="container-fluid">
+    <div class="alert alert-danger fade in" ng-show="model.error">
+        <a href="#" class="close" ng-click="model.alertOpenClose(model.error)">&times;</a>
+        {{model.errorMessage}}
+    </div>
+
+    <div class="alert alert-success fade in" ng-show="model.success">
+        <a href="#" class="close alert-close" ng-click="model.alertOpenClose(model.success)">&times;</a>
+        {{model.successMessage}}<br/>
+        Click <a ui-sref="widget({uid: model.userId, wid: model.websiteId, pid: model.pageId})">here</a> to view your
+        Widget Page
+    </div>
+</div>
+<form>
+<label>Name</label>
+<input ng-model="model.widget.name" class="form-control"/>
+
+<label>Text</label>
+<input ng-model="model.widget.text" class="form-control"/>
+
+<label>Size</label>
+<select ng-options="headerSize for headerSize in model.headerSizes" ng-model="model.widget.size" class="form-control">
+</select>
+
+<a class="btn btn-block btn-primary" ng-click="model.updateWidget()">Update Header</a>
+<a class="btn btn-block btn-danger" ng-click="model.deleteWidget()">Delete</a>
+</form>
+</div>
