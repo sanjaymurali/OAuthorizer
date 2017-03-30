@@ -16,18 +16,18 @@ var port = process.env.PORT || 3000;
 
 require("./assignment/app.js")(app);
 
-//app.use('/makerapi', webappmaker);
+//app.use('/makerapi', MainApp);
 
 
 //Used to setup the client
-app.use('/js', express.static(__dirname + '/public/assignment/js'));
-app.use('/css', express.static(__dirname + '/public/assignment/css'));
-app.use('/views', express.static(__dirname + '/public/assignment/views'));
+app.use('/js', express.static(__dirname + '/public/js'));
+app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/views', express.static(__dirname + '/public/views'));
 
 
 app.all('/*', function (req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
-    res.sendFile('index.html', {root: 'public/assignment'});
+    res.sendFile('index.html', {root: 'public'});
 });
 
 app.listen(port);
