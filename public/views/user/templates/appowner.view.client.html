@@ -1,0 +1,70 @@
+<form ng-submit="model.update(model.user)">
+    <label for="first">First Name</label>
+    <input ng-model="model.user.firstName"
+           id="first"
+           class="form-control"
+           type="text"
+           placeholder="First Name"/>
+
+    <label for="last">Last Name</label>
+    <input ng-model="model.user.lastName"
+           id="last"
+           class="form-control"
+           type="text"
+           placeholder="Last Name"/>
+
+    <label for="email">Email</label>
+    <input ng-model="model.user.email"
+           id="email"
+           class="form-control"
+           type="email"
+           placeholder="Email"/>
+
+    <label>Username</label>
+    <input ng-model="model.user.username"
+           class="form-control"
+           type="text"
+           placeholder="Username"/>
+
+    <label>Password</label>
+    <input class="form-control" type="password" placeholder="Password"/>
+
+    <hr>
+
+    <label class="text-success">Application Specific</label>
+    <br/>
+    <label for="secret">Secret</label>
+    <input ng-model="model.user.secret"
+           id="secret"
+           class="form-control"
+           type="text"
+           placeholder="Secret"/>
+
+    <label for="clientid">Client ID</label>
+    <input ng-model="model.user.clientId"
+           id="clientid"
+           class="form-control"
+           type="text"
+           placeholder="Client ID"/>
+
+    <label for="appname">APP Name</label>
+    <input ng-model="model.user.appname"
+           id="appname"
+           class="form-control"
+           type="text"
+           placeholder="APP Name"/>
+
+    <button type="submit"
+            class="btn btn-primary btn-block">
+        Update
+    </button>
+
+    <a ng-click="model.unregisterUser(model.user)"
+       class="btn btn-danger btn-block">
+        Delete
+    </a>
+
+    <a class="btn btn-danger btn-block" ng-click="model.logout()">
+        Logout
+    </a>
+</form>

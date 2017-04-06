@@ -1,9 +1,26 @@
 var express = require('express');
+var expressSession = require('express-session');
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
 var app = express();
 
+app.use(require('express-favicon-short-circuit'));
+
+app.use(cookieParser());
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(expressSession({
+    secret: "bigsecret!",
+    resave: true,
+    saveUninitialized: true
+    //cookie: {maxAge: 5000}
+
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // configure a public directory to host static content
 app.use(express.static(__dirname + '/public'));

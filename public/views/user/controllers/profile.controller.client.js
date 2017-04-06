@@ -3,7 +3,7 @@
         .module("MainApp")
         .controller("profileController", profileController);
 
-    function profileController($state, $stateParams, UserService, resolvedJson) {
+    function profileController($state, $stateParams, UserService, checkSession) {
         var vm = this;
 
 
@@ -11,18 +11,14 @@
 
             var user = {};
             vm.userId = $stateParams['uid'];
-
-
-            if (resolvedJson.statusText === "OK") {
-                var userJson = resolvedJson.data;
-                user = userJson.user;
-                vm.user = user;
+            if(!checkSession) {}
+            else {
+                vm.user = checkSession;
             }
-            else
-                vm.error = 'Error';
 
             vm.update = update;
             vm.unregisterUser = unregisterUser;
+            vm.logout = logout;
         }
 
         init();
@@ -53,6 +49,11 @@
                             vm.error = 'unable to remove user';
                     });
             }
+        }
+
+        function logout() {
+                $state.go('login');
+                UserService.logout();
         }
     }
 })();

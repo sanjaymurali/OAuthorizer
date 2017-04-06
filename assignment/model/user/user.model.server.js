@@ -20,6 +20,21 @@ module.exports = function () {
     var UserSchema = require('./user.schema.server')();
     var UserModel = mongoose.model('UserModel', UserSchema);
 
+    var options = {discriminatorKey: 'userType'};
+
+    // This is not a new Model, instead its something like inheritance
+    // Link to DOCS: http://mongoosejs.com/docs/discriminators.html
+
+    var AppOwnerModel = UserModel.discriminator('appOwner',
+        new mongoose.Schema({
+            appname: String,
+            userId: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+            clientId: String,
+            secret: {type: String, default: ""}
+        }, options));
+
+    UserModel.discriminator('normalUser', new mongoose.Schema({}, options));
+
     return api;
 
     function createUser(user) {
@@ -50,28 +65,17 @@ module.exports = function () {
     function updateUser(userId, changedUser) {
         var deferred = q.defer();
 
-        var updatedUser = {};
-        var updatedProperties = Object.getOwnPropertyNames(changedUser);
-        var schemaProp = Object.getOwnPropertyNames(UserModel.schema.obj);
+        var modelToChoose = UserModel;
+        if(changedUser.userType === "appOwner")
+            modelToChoose = AppOwnerModel;
 
-        if (changedUser._id === userId) {
-        for (i = 0; i < schemaProp.length; i++) {
-                for (j = 0; j < updatedProperties.length; j++) {
-                    if (schemaProp[i] === updatedProperties[j]
-                        && updatedProperties[j] != '_id'){
-                        updatedUser[updatedProperties[j]] = changedUser[updatedProperties[j]];
-                    }
-
-
-                }
-            }
-        }
-
-        UserModel.findByIdAndUpdate({_id: userId}, { $set: updatedUser}, {new: true}, function (err, user) {
-            if(err)
+        modelToChoose.findByIdAndUpdate({_id: userId}, { $set: changedUser, $setOnInsert: changedUser}, {new: true}, function (err, user) {
+            if(err){
                 deferred.reject(err);
-            else
+            }
+            else {
                 deferred.resolve(user);
+            }
         });
 
         return deferred.promise;
@@ -107,8 +111,10 @@ module.exports = function () {
         UserModel.findOne({username: username}, function (err, user) {
             if(err)
                 deferred.reject(err);
-            else
+            else {
                 deferred.resolve(user);
+            }
+
         });
 
         return deferred.promise;

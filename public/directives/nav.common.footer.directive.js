@@ -21,9 +21,7 @@
     };
 
     function linkfn(scope, element) {
-
         scope.userid = element.attr('uid');
-
     };
 
 })();

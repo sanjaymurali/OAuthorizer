@@ -18,23 +18,25 @@
 
         init();
 
-
         function login(user) {
             var loginUser = {};
-            UserService
-                .findUserByCredentials(user.username, user.password)
-                .then(function (response) {
-                    if (!response.data.user) {
+            if (!user.username || !user.password) {
+            }
+            else {
+                UserService
+                    .login(user)
+                    .then(function (response) {
+                        if (!response.data.user) {
+                            vm.error = 'User not found';
+                        }
+                        else {
+                            $state.go('profile', {uid: response.data.user._id});
+                        }
+                    }, function (error) {
                         vm.error = 'User not found';
-                    }
-                    else {
-                        var json = response.data;
-                        loginUser = json.user;
-                        $state.go('profile', {uid: loginUser._id});
-                    }
-                }, function (error) {
-                    vm.error = 'User not found';
-                });
+                    });
+            }
+
         }
     }
 })();

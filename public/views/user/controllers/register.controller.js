@@ -7,12 +7,12 @@
         .module("MainApp")
         .controller("registerController", registerController);
 
-    function registerController(UserService, $state) {
+    function registerController(UserService, $state, $cookies) {
         var vm = this;
 
         function init() {
             vm.user = {};
-            vm.error = false;
+            vm.user.userType = "normalUser"; //Set the initial type of user
             vm.register = register;
         }
 
@@ -20,19 +20,19 @@
 
         function register(user) {
             // Remove this later
-            if (user.password === undefined || user.verifyPassword === undefined || user.username === undefined)
-                vm.error = "Unable to Register";
+            if (!user.password || !user.verifyPassword|| !user.username){}
             else {
                 if (user.password === user.verifyPassword) {
-                    var registerUser = {};
                     UserService
                         .findUserByUsername(user.username)
                         .then(function (response) {
                             if(response.data.user)
                                 vm.error = 'Change the Username';
                             else {
+                                /*if(user.userType === "normalUser")
+                                    user.userType = "";*/
                                 UserService
-                                    .createUser(user)
+                                    .register(user)
                                     .then(function (response) {
                                         if (response.statusText === "OK") {
                                             var json = response.data;

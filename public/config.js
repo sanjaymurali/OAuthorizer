@@ -17,18 +17,34 @@
         //$httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
         //$httpProvider.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
 
-        var userJSON = {
-            resolvedJson: function ($stateParams, UserService) {
-                return UserService
-                    .findUserById($stateParams['uid'])
-                    .then(function (response) {
-                        return response;
-                    }, function(err){
-                    });
-            }
+        var userJSON = function ($q, $stateParams, $state, UserService) {
+            var userid = $stateParams.uid + "";
+            var deferred = $q.defer();
+            UserService
+                .checkSession(userid)
+                .then(function (response) {
+                    if(!response.data.success) {
+                        deferred.reject(null);
+                        $state.go('sessionerror');
+                    }
+                    else{
+                        deferred.resolve(response.data.user)
+                    }
+                }, function(err){
+                    deferred.reject();
+                    $state.go('sessionerror');
+                });
+            return deferred.promise;
         };
 
         $stateProvider
+            .state('index', {
+                url: '/'
+            })
+            .state('sessionerror', {
+                url: '/sessionexpired',
+                templateUrl: 'views/user/templates/sessionerror.view.client.html'
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'views/user/templates/login.view.client.html',
@@ -40,14 +56,13 @@
                 templateUrl: 'views/user/templates/register.view.client.html',
                 controller: 'registerController',
                 controllerAs: 'model'
-
             })
             .state('profile', {
                 url: '/user/:uid',
                 templateUrl: 'views/user/templates/profile.view.client.html',
                 controller: 'profileController',
                 controllerAs: 'model',
-                resolve: userJSON
+                resolve: {checkSession: userJSON}
             })
             .state('website', {
                 url: '/user/:uid/website',
@@ -116,7 +131,7 @@
                 controllerAs: 'model'
             });
 
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/');
     }
 
     MainAppModule.config(configuration);
