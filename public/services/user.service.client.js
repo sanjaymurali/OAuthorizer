@@ -11,6 +11,8 @@
 
         var apiURL = '/api/';
 
+        var user = {};
+
         var api = {
             "createUser": createUser,
             "updateUser": updateUser,
@@ -21,12 +23,19 @@
             "login": login,
             "logout": logout,
             "checkSession": checkSession,
-            "register": register
+            "loggedIn": loggedIn,
+            "register": register,
+            "getUser": getUser,
+            "setUser": setUser
         };
         return api;
 
-        function checkSession(userid) {
-            return $http.get('/api/loggedin/' + userid);
+        function loggedIn(userid) {
+            return $http.get('/api/checksession/',{params: {userid: userid}});
+        }
+
+        function checkSession() {
+            return $http.get('/api/checksession/');
         }
 
         function register(user) {
@@ -63,6 +72,14 @@
 
         function logout() {
             return $http.post('/api/logout');
+        }
+
+        function getUser() {
+            return this.user;
+        }
+
+        function setUser(user) {
+            this.user = user;
         }
 
     }

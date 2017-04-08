@@ -1,4 +1,4 @@
-<form ng-submit="model.update(model.user)">
+<form ng-submit="model.update(model.user, model.file)">
     <label for="first">First Name</label>
     <input ng-model="model.user.firstName"
            id="first"
@@ -31,6 +31,35 @@
 
     <hr>
 
+
+    <label class="text-success">Your App's Public Profile</label>
+    <br/>
+    <label for="appurl">Application URL</label>
+    <input ng-model="model.user.appurl"
+           id="appurl"
+           class="form-control"
+           type="text"
+           placeholder="App URL"/>
+
+    <label for="aboutapp">About Your App</label>
+    <textarea
+            rows="3"
+            class="form-control"
+            id="aboutapp"
+            placeholder="About Your App"
+            ng-model="model.user.about">{{model.user.about}}</textarea>
+
+    <label for="apppicture">APP Image</label>
+    <input type="file"
+           name="apppicture"
+           ngf-select
+           ng-model="model.file"
+           accept="'image/*'"
+           id="apppicture"
+           class="form-control"/>
+
+    <hr>
+
     <label class="text-success">Application Specific</label>
     <br/>
     <label for="secret">Secret</label>
@@ -53,6 +82,7 @@
            class="form-control"
            type="text"
            placeholder="APP Name"/>
+
 
     <button type="submit"
             class="btn btn-primary btn-block">

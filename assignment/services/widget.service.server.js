@@ -6,7 +6,6 @@
 module.exports = function (app, widgetModel, pageModel) {
 
     var multer = require('multer');
-    var upload = multer({dest: __dirname + '/../../public/uploads'});
     var initialPos = 0;
     var finalPos = 0;
 
@@ -89,7 +88,6 @@ module.exports = function (app, widgetModel, pageModel) {
     app.get('/api/widget/:widgetId', findWidgetById);
     app.put('/api/widget/:widgetId', updateWidget);
     app.delete('/api/widget/:widgetId', deleteWidget);
-    app.post("/api/upload", upload.single('uploadedImage'), uploadImage);
 
     function uploadImage(req, res) {
 

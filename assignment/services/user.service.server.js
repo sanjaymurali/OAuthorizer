@@ -13,8 +13,22 @@ module.exports = function (app, userModel) {
 
     //TODO: create bcrypt passwords!
 
+    var multer = require('multer');
+    var path = require('path');
     var passport = require('passport');
+
     var LocalStrategy = require('passport-local').Strategy;
+
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, __dirname + '/../../public/uploads');
+        },
+        filename: function (req, file, cb) {
+            cb(null, path.basename(file.originalname, path.extname(file.originalname)) + "_" + Date.now() + path.extname(file.originalname));
+        }
+    });
+
+    var upload = multer({storage: storage});
 
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
@@ -22,24 +36,44 @@ module.exports = function (app, userModel) {
 
     app.post('/api/login',passport.authenticate('local'), login);
     app.post('/api/logout', logout);
-    app.get('/api/loggedin/:userId', loggedIn);
+    app.get('/api/checksession', checkSessionOrLoggedIn);
 
     app.post('/api/user', createUser);
     app.post('/api/register', register);
     app.get('/api/user', findUser);
-    app.get('/api/user/:userId',authenticate, findUserById);
-    app.put('/api/user/:userId',authenticate, updateUser);
-    app.delete('/api/user/:userId',authenticate, deleteUser);
+    app.get('/api/user/:userId', findUserById);
+    app.put('/api/user/:userId',authenticationMiddleware, updateUser);
+    app.delete('/api/user/:userId',authenticationMiddleware, deleteUser);
+
+    app.post("/api/upload", upload.single('file'), checkSessionMiddleware, uploadImage);
+
+    function uploadImage(req, res) {
+        userModel.findUserById(req.user._id).then(function(user){
+            console.log(req.file.filename);
+            user.profileimage = "/uploads/" + req.file.filename;
+            user.save();
+            res.sendStatus(200);
+        }, function(err){
+            res.sendStatus(500);
+        });
+    }
 
 
     function loggedIn(req, res) {
-        var userid = req.params.userId;
+        var userid = req.query.userid;
         /*
          This is done inorder to check whether the same user
          is accessing the page requested or not.
          */
         var requserid = !req.user ? "" : req.user._id + "";
         if(req.isAuthenticated() && requserid === userid)
+            res.status(200).json({success: true, user: req.user});
+        else
+            res.status(200).json({success: false})
+    }
+
+    function checkSession(req, res) {
+        if(req.isAuthenticated())
             res.status(200).json({success: true, user: req.user});
         else
             res.status(200).json({success: false})
@@ -125,6 +159,7 @@ module.exports = function (app, userModel) {
         userModel.
         findUserById(userId)
             .then(function (user) {
+                user.password = undefined;
                 res.status(200).json({user: user});
             }, function (err) {
                 res.sendStatus(404);
@@ -167,6 +202,13 @@ module.exports = function (app, userModel) {
             findUserByCredentials(req, res);
         else
             findUserByUsername(req, res);
+    }
+
+    function checkSessionOrLoggedIn(req, res) {
+        if(req.query.userid)
+            loggedIn(req, res);
+        else
+            checkSession(req,res);
     }
 
     // Passport and Session
@@ -212,7 +254,7 @@ module.exports = function (app, userModel) {
                 });
     }
 
-    function authenticate(req, res, next) {
+    function authenticationMiddleware(req, res, next) {
 
         var userid = req.params.userId;
         /*
@@ -221,6 +263,13 @@ module.exports = function (app, userModel) {
          */
         var requserid = !req.user ? "" : req.user._id + "";
         if(req.isAuthenticated() && requserid === userid)
+            next();
+        else
+            return res.json({loggedin: false});
+    }
+
+    function checkSessionMiddleware(req, res, next) {
+        if(req.isAuthenticated())
             next();
         else
             return res.json({loggedin: false});

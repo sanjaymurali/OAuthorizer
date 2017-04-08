@@ -1,27 +1,18 @@
 <div class="container-fluid">
-    <h1>Profile</h1>
-
-    <div class="alert alert-danger" ng-show="model.error">
-        {{model.error}}
-    </div>
-
-    <div class="alert alert-success" ng-show="model.message">
-        {{model.message}}
-    </div>
+    <h1>App Profile</h1>
 
     <div ng-switch="model.user.userType">
         <div ng-switch-when="normalUser">
-            <ng-include src="'views/user/templates/normaluser.view.client.html'"></ng-include>
+            <ng-include src="'views/user/templates/view/normaluser.view.client.html'"></ng-include>
             <br/>
         </div>
         <div ng-switch-when="appOwner">
-            <ng-include src="'views/user/templates/appowner.view.client.html'"></ng-include>
+            <ng-include src="'views/user/templates/view/appowner.view.client.html'"></ng-include>
             <br/>
         </div>
     </div>
 
 </div>
-
 
 <nav-footer-common
         uid="{{model.user._id}}">

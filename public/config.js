@@ -17,17 +17,39 @@
         //$httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
         //$httpProvider.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
 
-        var userJSON = function ($q, $stateParams, $state, UserService) {
+        var checkSession = function ($q, $stateParams, $state, UserService) {
             var userid = $stateParams.uid + "";
             var deferred = $q.defer();
             UserService
-                .checkSession(userid)
+                .checkSession()
                 .then(function (response) {
                     if(!response.data.success) {
                         deferred.reject(null);
                         $state.go('sessionerror');
                     }
                     else{
+                        UserService.setUser(response.data.user);
+                        deferred.resolve(response.data.user);
+                    }
+                }, function(err){
+                    deferred.reject();
+                    $state.go('sessionerror');
+                });
+            return deferred.promise;
+        };
+
+        var loggedIn = function ($q, $stateParams, $state, UserService) {
+            var userid = $stateParams.uid + "";
+            var deferred = $q.defer();
+            UserService
+                .loggedIn(userid)
+                .then(function (response) {
+                    if(!response.data.success) {
+                        deferred.reject(null);
+                        $state.go('sessionerror');
+                    }
+                    else{
+
                         deferred.resolve(response.data.user)
                     }
                 }, function(err){
@@ -62,7 +84,14 @@
                 templateUrl: 'views/user/templates/profile.view.client.html',
                 controller: 'profileController',
                 controllerAs: 'model',
-                resolve: {checkSession: userJSON}
+                resolve: {checkSession: checkSession}
+            })
+            .state('profile-edit', {
+                url: '/user/:uid/edit',
+                templateUrl: 'views/user/templates/profile-edit.view.client.html',
+                controller: 'profileEditController',
+                controllerAs: 'model',
+                resolve: {loggedIn: loggedIn}
             })
             .state('website', {
                 url: '/user/:uid/website',

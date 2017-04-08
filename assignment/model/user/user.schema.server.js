@@ -13,7 +13,8 @@ module.exports = function () {
         firstName: String,
         lastName: String,
         email: String,
-        userType: String
+        userType: String,
+        profileimage: String
     }, options);
 
     return UserSchema;

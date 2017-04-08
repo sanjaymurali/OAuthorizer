@@ -1,5 +1,5 @@
 (function () {
     angular
-        .module("MainApp", ['ui.router','textAngular','ngCookies']);
+        .module("MainApp", ['ui.router', 'ngFileUpload', 'star-rating']);
 
 })();

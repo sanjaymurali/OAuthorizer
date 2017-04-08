@@ -1,6 +1,7 @@
 var express = require('express');
 var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
+var MongoStore = require('connect-mongo')(expressSession);
 var passport = require('passport');
 var app = express();
 
@@ -13,9 +14,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(expressSession({
     secret: "bigsecret!",
+    store: new MongoStore({
+        url: 'mongodb://127.0.0.1:27017/webdev-project'
+    }),
     resave: true,
-    saveUninitialized: true
-    //cookie: {maxAge: 5000}
+    saveUninitialized: true,
+    cookie: {maxAge: 600000}
+
 
 }));
 app.use(passport.initialize());

@@ -28,12 +28,16 @@ module.exports = function () {
     var AppOwnerModel = UserModel.discriminator('appOwner',
         new mongoose.Schema({
             appname: String,
-            userId: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+            about: String,
+            appurl: String,
+            registeredUsers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
             clientId: String,
             secret: {type: String, default: ""}
         }, options));
 
-    UserModel.discriminator('normalUser', new mongoose.Schema({}, options));
+    UserModel.discriminator('normalUser', new mongoose.Schema({
+        registeredApps: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+    }, options));
 
     return api;
 

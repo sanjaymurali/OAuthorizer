@@ -1,0 +1,120 @@
+<div class="container">
+
+    <img src="{{model.user.profileimage}}">
+    <br/>
+    App Name: {{model.user.appname}}<br/>
+    App URL: {{model.user.appurl}}
+
+    <section class="comments">
+        <h1>Reviews:</h1>
+        <span ng-if="model.firstToComment">
+            Be the First to comment!
+        </span>
+        <blockquote ng-repeat="comment in model.comments.comments" class="comment">
+            <div class="edit-toolbar dropdown" ng-if="model.checkIfUserCanEditComment(model.currentUser._id,comment.postedid)">
+                <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#" ng-click="model.editComment(comment, $index)">Edit Comment</a></li>
+                    <li><a href="#" ng-click="model.deleteComment(model.userId, comment.postedid, $index)">Delete Comment</a></li>
+                </ul>
+            </div>
+
+            <div class="list-inline">
+                <li class="title"><strong>{{comment.title}}</strong></li>
+            <li class="rating">
+                <star-rating-comp rating="comment.rating" disabled="true" star-type="'icon'" color="'positive'">
+
+                </star-rating-comp>
+            </li>
+            </div>
+
+            <div class="list-inline comment-info">
+                <li class="commentor"><i>by</i> {{comment.postedby}}</li> on
+                <li class="date">
+                    <!--7<sup>th</sup> April, 2017-->
+                    {{comment.updatedAt | date: 'MM/dd/yyyy'}}
+                </li>
+            </div>
+
+        <div class="review">{{comment.review}}</div>
+        </blockquote>
+    </section>
+
+    <section class="add-comment">
+        <h1>Add Review</h1>
+
+        <div class="alert alert-danger fade in" ng-show="model.error">
+            <a href="#" class="close" ng-click="model.alertOpenClose(model.error)">&times;</a>
+            {{model.errorMessage}}
+        </div>
+
+        <div class="alert alert-success fade in" ng-show="model.success">
+            <a href="#" class="close alert-close" ng-click="model.alertOpenClose(model.success)">&times;</a>
+            {{model.successMessage}}<br/>
+        </div>
+
+        <div class="alert alert-danger" ng-if="model.userCantComment === true && !model.editingComment">
+            You have already reviewed this app! <br/>
+            Thank you!
+        </div>
+
+        <form ng-if="model.userCantComment === false" ng-submit="model.postComment(model.newComment)">
+            <div class="stars">Rating:
+                <star-rating-comp on-rating-change="model.ratingChange($event)" rating="model.initialRating" star-type="'icon'" color="'positive'">
+
+                </star-rating-comp>
+                </div>
+
+            <label for="title">Title</label>
+            <input id="title"
+                   type="text"
+                   name="title"
+                   class="form-control"
+                   placeholder="Title"
+                   ng-model="model.newComment.title" />
+
+            <label for="review">Review</label>
+            <textarea
+                    rows="3"
+                    id="review"
+                    name="review"
+                    class="form-control"
+                    placeholder="Review"
+                    ng-model="model.newComment.review">
+            </textarea>
+
+            <button type="submit" class="btn btn-primary btn-block">Post Comment</button>
+        </form>
+
+        <form ng-if="model.editingComment"
+              ng-submit="model.updateComment(model.userId, model.commentChosenForEditing)">
+            <div class="stars">Rating:
+                <star-rating-comp on-rating-change="model.ratingChange($event)" rating="model.commentChosenForEditing.rating" star-type="'icon'" color="'positive'">
+
+                </star-rating-comp>
+            </div>
+
+            <label for="edit_title">Title</label>
+            <input id="edit_title"
+                   type="text"
+                   name="title"
+                   class="form-control"
+                   ng-model="model.commentChosenForEditing.title" />
+
+            <label for="edit_review">Review</label>
+            <textarea
+                    rows="3"
+                    id="edit_review"
+                    name="review"
+                    class="form-control"
+                    placeholder="Review"
+                    ng-model="model.commentChosenForEditing.review">
+
+            </textarea>
+
+            <button type="submit" class="btn btn-primary btn-block">Edit Comment</button>
+        </form>
+    </section>
+</div>
