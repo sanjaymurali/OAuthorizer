@@ -36,6 +36,15 @@
                         }
                     });
                 }
+                else if(imageFile) {
+                    Upload.upload({
+                        url: '/api/upload',
+                        arrayKey: '',
+                        data: {
+                            file: imageFile
+                        }
+                    });
+                }
 
             UserService
                 .updateUser(vm.userId, newUser)
