@@ -1,4 +1,4 @@
-<form ng-submit="model.update(model.user)">
+<form ng-submit="model.update(model.user, model.file)">
     <label for="first">First Name</label>
     <input ng-model="model.user.firstName"
            id="first"
@@ -12,6 +12,15 @@
            class="form-control"
            type="text"
            placeholder="Last Name"/>
+
+    <label for="apppicture">APP Image</label>
+    <input type="file"
+           name="apppicture"
+           ngf-select
+           ng-model="model.file"
+           accept="'image/*'"
+           id="apppicture"
+           class="form-control"/>
 
     <label for="email">Email</label>
     <input ng-model="model.user.email"

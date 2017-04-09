@@ -18,7 +18,6 @@
         //$httpProvider.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
 
         var checkSession = function ($q, $stateParams, $state, UserService) {
-            var userid = $stateParams.uid + "";
             var deferred = $q.defer();
             UserService
                 .checkSession()
@@ -49,7 +48,6 @@
                         $state.go('sessionerror');
                     }
                     else{
-
                         deferred.resolve(response.data.user)
                     }
                 }, function(err){
@@ -62,10 +60,6 @@
         $stateProvider
             .state('index', {
                 url: '/'
-            })
-            .state('sessionerror', {
-                url: '/sessionexpired',
-                templateUrl: 'views/user/templates/sessionerror.view.client.html'
             })
             .state('login', {
                 url: '/login',
@@ -86,6 +80,20 @@
                 controllerAs: 'model',
                 resolve: {checkSession: checkSession}
             })
+            .state('app-page', {
+                url: '/app/:appid',
+                templateUrl: 'views/application/templates/application.view.client.html',
+                controller: 'appProfileController',
+                controllerAs: 'model',
+                resolve: {checkSession: checkSession}
+            })
+            .state('all-apps', {
+                url: '/apps',
+                templateUrl: 'views/application/templates/showall.view.client.html',
+                controller: 'allAppsController',
+                controllerAs: 'model',
+                resolve: {checkSession: checkSession}
+            })
             .state('profile-edit', {
                 url: '/user/:uid/edit',
                 templateUrl: 'views/user/templates/profile-edit.view.client.html',
@@ -93,6 +101,17 @@
                 controllerAs: 'model',
                 resolve: {loggedIn: loggedIn}
             })
+
+
+            .state('sessionerror', {
+                url: '/sessionexpired',
+                templateUrl: 'views/errors/templates/sessionerror.view.client.html'
+            })
+            .state('notfound', {
+                url: '/notfound',
+                templateUrl: 'views/errors/templates/notfound.view.client.html'
+            })
+
             .state('website', {
                 url: '/user/:uid/website',
                 templateUrl: 'views/website/templates/website-list.view.client.html',

@@ -20,6 +20,7 @@
             "findUserByCredentials": findUserByCredentials,
             "findUserById": findUserById,
             "findUserByUsername": findUserByUsername,
+            "findUsersByType": findUsersByType,
             "login": login,
             "logout": logout,
             "checkSession": checkSession,
@@ -64,6 +65,10 @@
 
         function findUserByUsername(username) {
             return $http.get(apiURL + 'user', {params: {username: username}});
+        }
+
+        function findUsersByType(usertype) {
+            return $http.get(apiURL + 'user', {params: {usertype: usertype}});
         }
 
         function login(user) {

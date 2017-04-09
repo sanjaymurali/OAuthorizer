@@ -73,8 +73,11 @@ select.form-control {
 }
 
 /* ============================================================================================================================ */
-/* Comment Section Styling */
+/* Application Comment Section Styling */
 
+.add-comment {
+    margin-bottom: 20px;
+}
 
 .review {
     margin-top: 15px;

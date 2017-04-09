@@ -197,11 +197,36 @@ module.exports = function (app, userModel) {
             });
     }
 
+    function findUsersByType(req, res) {
+        var usertype = req.query.usertype + "";
+
+        userModel
+            .findUsersByType(usertype)
+            .then(function (users) {
+                if(!users || users.length === 0)
+                    res.sendStatus(200);
+                else {
+                    users.map(function(user){
+                        user.password = undefined;
+                    });
+
+                    res.status(200).json({users: users});
+                }
+            }, function (err) {
+                res.sendStatus(200);
+            });
+    }
+
+
     function findUser(req, res) {
-        if (req.query.username && req.query.password)
-            findUserByCredentials(req, res);
-        else
-            findUserByUsername(req, res);
+        if(req.query.usertype)
+            findUsersByType(req, res);
+        else {
+            if (req.query.username && req.query.password)
+                findUserByCredentials(req, res);
+            else
+                findUserByUsername(req, res);
+        }
     }
 
     function checkSessionOrLoggedIn(req, res) {

@@ -1,20 +1,16 @@
 <div class="container-fluid">
-    <h1>App Profile</h1>
 
-    <div ng-switch="model.user.userType">
-        <div ng-switch-when="normalUser">
-            <ng-include src="'views/user/templates/view/normaluser.view.client.html'"></ng-include>
-            <br/>
-        </div>
-        <div ng-switch-when="appOwner">
-            <ng-include src="'views/user/templates/view/appowner.view.client.html'"></ng-include>
-            <br/>
-        </div>
+    <div class="container">
+        <h1>Normal User</h1>
+        <img src="{{model.user.profileimage}}">
+        <br/>
+        First Name: {{model.user.firstName}}<br/>
+        Last Name: {{model.user.lastName}}<br/>
     </div>
 
 </div>
 
 <nav-footer-common
-        uid="{{model.user._id}}">
+        uid="{{model.currentUser._id}}">
 </nav-footer-common>
 

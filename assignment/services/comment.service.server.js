@@ -14,6 +14,8 @@ module.exports = function (app, commentModel) {
     function createComment(req, res) {
         var comment = req.body;
 
+        comment = checkForId(comment);
+
         if(req.user && req.user.userType === "appOwner")
             res.json({success: false, message: "You cant review an App!"});
 
@@ -75,7 +77,7 @@ module.exports = function (app, commentModel) {
         var postedid = req.params.postedid + "";
 
         var userid = !req.user? "" : (req.user._id + "");
-        console.log(req.isAuthenticated() && (postedid === userid));
+        console.log("req.user:" , userid);
         if(req.isAuthenticated() && (postedid === userid)) {
             commentModel.deleteComment(useridfromclient, postedid).then(function(response){
                 res.sendStatus(200);
@@ -107,5 +109,14 @@ module.exports = function (app, commentModel) {
             next();
         else
             return res.json({loggedin: false});
+    }
+
+    function checkForId(comment) {
+        if(comment._id)
+            delete comment._id;
+        if(comment.comments[0]._id)
+            delete comment.comments[0]._id;
+
+        return comment;
     }
  };

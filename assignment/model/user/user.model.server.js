@@ -10,7 +10,8 @@ module.exports = function () {
         deleteUser: deleteUser,
         findUserById: findUserById,
         findUserByCredentials: findUserByCredentials,
-        findUserByUsername: findUserByUsername
+        findUserByUsername: findUserByUsername,
+        findUsersByType: findUsersByType
     };
 
     var mongoose = require('mongoose');
@@ -117,6 +118,20 @@ module.exports = function () {
                 deferred.reject(err);
             else {
                 deferred.resolve(user);
+            }
+
+        });
+
+        return deferred.promise;
+    }
+
+    function findUsersByType(userType) {
+        var deferred = q.defer();
+        UserModel.find({userType: userType}, function (err, users) {
+            if(err)
+                deferred.reject(err);
+            else {
+                deferred.resolve(users);
             }
 
         });

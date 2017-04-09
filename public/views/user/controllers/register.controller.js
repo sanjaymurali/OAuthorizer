@@ -7,7 +7,7 @@
         .module("MainApp")
         .controller("registerController", registerController);
 
-    function registerController(UserService, $state, $cookies) {
+    function registerController(UserService, $state) {
         var vm = this;
 
         function init() {
