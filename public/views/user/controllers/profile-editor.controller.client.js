@@ -24,14 +24,15 @@
 
         init();
 
-        function update(newUser, imageFile) {
+        function update(newUser, imageFile, filename) {
             var user = {};
-                if(imageFile) {
+                if(imageFile && filename) {
+
                     Upload.upload({
                         url: '/api/upload',
                         arrayKey: '',
                         data: {
-                            file: imageFile
+                            file: Upload.dataUrltoBlob(imageFile, filename)
                         }
                     });
                 }

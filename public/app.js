@@ -1,5 +1,5 @@
 (function () {
     angular
-        .module("MainApp", ['ui.router', 'ngFileUpload', 'star-rating']);
+        .module("MainApp", ['ui.router', 'ngFileUpload', 'star-rating', 'ngImgCrop']);
 
 })();

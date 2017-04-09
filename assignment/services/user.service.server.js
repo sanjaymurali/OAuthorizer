@@ -61,20 +61,31 @@ module.exports = function (app, userModel) {
 
     function loggedIn(req, res) {
         var userid = req.query.userid;
+        var user = {};
         /*
          This is done inorder to check whether the same user
          is accessing the page requested or not.
          */
         var requserid = !req.user ? "" : req.user._id + "";
-        if(req.isAuthenticated() && requserid === userid)
-            res.status(200).json({success: true, user: req.user});
+        if(req.isAuthenticated() && requserid === userid){
+            user = req.user;
+            user.password = undefined;
+            res.status(200).json({success: true, user: user});
+        }
+
         else
             res.status(200).json({success: false})
     }
 
     function checkSession(req, res) {
-        if(req.isAuthenticated())
-            res.status(200).json({success: true, user: req.user});
+        var user = {};
+
+        if(req.isAuthenticated()) {
+            user = req.user;
+            user.password = undefined;
+            res.status(200).json({success: true, user: user});
+        }
+
         else
             res.status(200).json({success: false})
     }
