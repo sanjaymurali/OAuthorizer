@@ -11,7 +11,7 @@
                     <div class="col-md-4" ng-repeat="application in model.applications">
                         <div class="card card-member">
                             <div class="content">
-                                <div class="avatar avatar-danger">
+                                <div class="avatar ">
                                     <a ui-sref="app-page({appid: application._id})"><img alt="..."
                                          class="img-circle"
                                          ng-src="{{application.profileimage}}"
@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="description">
                                     <h3 class="title">{{application.appname}}</h3>
-                                    <p class="small-text">URL: {{application.url}}</p>
+                                    <p class="small-text">URL: {{application.appurl}}</p>
                                     <p class="description">{{application.about}}</p>
                                 </div>
                             </div>

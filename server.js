@@ -5,6 +5,9 @@ var MongoStore = require('connect-mongo')(expressSession);
 var passport = require('passport');
 var app = express();
 
+var ejs = require('ejs');
+
+
 app.use(require('express-favicon-short-circuit'));
 
 app.use(cookieParser());
@@ -29,27 +32,24 @@ app.use(expressSession({
     }),
     resave: true,
     saveUninitialized: true,
+    autoRemove: 'interval',
+    autoRemoveInterval: 1, // In minutes. Default
     cookie: {maxAge: 600000}
-
-
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.set('view engine', 'ejs');
 
 
 // configure a public directory to host static content
 app.use(express.static(__dirname + '/public'));
 
-require("./assignment/dbconnection/connection")(app);
+require("./api/dbconnection/connection")(app);
 
 var port = process.env.PORT || 3000;
 
-//var apiRouter = require('express').Router();
-
-require("./assignment/app.js")(app);
-
-//app.use('/makerapi', MainApp);
-
+require("./api/app.js")(app);
 
 //Used to setup the client
 app.use('/js', express.static(__dirname + '/public/js'));

@@ -32,7 +32,7 @@
         return api;
 
         function loggedIn(userid) {
-            return $http.get('/api/checksession/',{params: {userid: userid}});
+            return $http.get('/api/checksession',{params: {userid: userid}});
         }
 
         function checkSession() {

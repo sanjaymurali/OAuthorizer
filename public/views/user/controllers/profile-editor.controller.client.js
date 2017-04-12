@@ -3,7 +3,7 @@
         .module("MainApp")
         .controller("profileEditController", profileEditController);
 
-    function profileEditController(Upload, $state, $stateParams, UserService, loggedIn,$window) {
+    function profileEditController(Upload, $state, $stateParams, UserService, $window) {
         var vm = this;
 
 
@@ -11,11 +11,7 @@
             $window.document.title = "Profile";
             var user = {};
             vm.userId = $stateParams['uid'];
-
-            if(!loggedIn) {}
-            else {
-                vm.user = loggedIn;
-            }
+            vm.user = UserService.getUser();
 
             vm.update = update;
             vm.unregisterUser = unregisterUser;
@@ -73,8 +69,9 @@
         }
 
         function logout() {
-                $state.go('login');
-                UserService.logout();
+            UserService.logout();
+            UserService.setUser(undefined);
+            $state.go('login');
         }
     }
 })();
