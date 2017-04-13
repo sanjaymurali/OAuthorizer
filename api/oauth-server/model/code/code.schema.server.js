@@ -11,7 +11,7 @@ module.exports = function () {
         authCode: String,
         redirectUri: String,
         userId: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
-        clientId: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'}
+        clientId: String
     }, options);
 
     return CodeSchema;

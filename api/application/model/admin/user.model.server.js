@@ -12,14 +12,14 @@ module.exports = function () {
         findUserByCredentials: findUserByCredentials,
         findUserByUsername: findUserByUsername,
         findUsersByType: findUsersByType,
-        findUserByClientID: findUserByClientID
+        findUserBySecret: findUserBySecret
     };
 
     var mongoose = require('mongoose');
 
     var q = require('q');
 
-    var UserSchema = require('./user.schema.server')();
+    var UserSchema = require('./admin.schema.server')();
     var UserModel = mongoose.model('UserModel', UserSchema);
 
     var options = {discriminatorKey: 'userType'};
@@ -33,9 +33,7 @@ module.exports = function () {
             about: String,
             appurl: String,
             registeredUsers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
-            secret: String,
-            clientId: String,
-            redirectUri: String
+            secret: String
         }, options));
 
     UserModel.discriminator('normalUser', new mongoose.Schema({
@@ -141,9 +139,9 @@ module.exports = function () {
         return deferred.promise;
     }
 
-    function findUserByClientID(clientID) {
+    function findUserBySecret(secret) {
         var deferred = q.defer();
-        UserModel.findOne({'clientId': clientID}, function (err, user) {
+        UserModel.findOne({'secret': secret}, function (err, user) {
             if(err)
                 deferred.reject(err);
             else {

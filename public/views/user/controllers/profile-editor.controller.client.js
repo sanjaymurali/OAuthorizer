@@ -21,7 +21,13 @@
         init();
 
         function update(newUser, imageFile, filename) {
+            cleanUpAlerts();
+
             var user = {};
+            user = newUser;
+            if(vm.appOwnerEditorForm && !vm.appOwnerEditorForm.clientId.$dirty)
+                user.clientId = undefined;
+
                 if(imageFile && filename) {
 
                     Upload.upload({
@@ -43,11 +49,18 @@
                 }
 
             UserService
-                .updateUser(vm.userId, newUser)
+                .updateUser(vm.userId, user)
                 .then(function (response) {
+                    console.log(response);
                     if (response.statusText === "OK") {
                         vm.message = "User successfully updated"
                     }
+                    else
+                        vm.error = "Unable to update user";
+
+                }, function(err){
+                    if(err.statusText === "Conflict")
+                        vm.error = "Please change ClientID";
                     else
                         vm.error = "Unable to update user";
                 });
@@ -72,6 +85,11 @@
             UserService.logout();
             UserService.setUser(undefined);
             $state.go('login');
+        }
+
+        function cleanUpAlerts() {
+            vm.success = false;
+            vm.error = false;
         }
     }
 })();

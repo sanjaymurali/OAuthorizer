@@ -17,6 +17,8 @@ module.exports = function (app, userModel) {
     var path = require('path');
     var passport = require('passport');
 
+    var bcrypt = require("bcrypt-nodejs");
+
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
             cb(null, __dirname + '/../../../public/uploads');
@@ -68,6 +70,8 @@ module.exports = function (app, userModel) {
         if(req.isAuthenticated() && requserid === userid){
             user = req.user;
             user.password = undefined;
+            if(user.secret)
+                user.secret = undefined;
             res.status(200).json({success: true, user: user});
         }
 
@@ -103,6 +107,7 @@ module.exports = function (app, userModel) {
 
     function register(req, res) {
         var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
         userModel
             .createUser(user).then(function(user){
             if(user){
@@ -145,12 +150,43 @@ module.exports = function (app, userModel) {
     }
 
     function updateUser(req, res) {
+        var updatedUser = req.body;
+
+        if(updatedUser.password)
+            updatedUser.password = bcrypt.hashSync(updatedUser.password);
+
+        if(updatedUser.secret)
+            updatedUser.secret = bcrypt.hashSync(updatedUser.secret);
+
         var userId = req.params.userId + "";
-        userModel.updateUser(userId, req.body).then(function(user){
-            res.status(200).json({user: user});
-        }, function (error) {
-            res.sendStatus(500);
-        });
+
+        if(updatedUser.clientId){
+            // to make sure that no to apps have the same clientId.
+            userModel
+                .findUserByClientID(updatedUser.clientId)
+                .then(function(user){
+                    if(!user){
+                        userModel.updateUser(userId, updatedUser).then(function(user){
+                            res.status(200).json({user: user});
+                        }, function (error) {
+                            res.sendStatus(500);
+                        });
+                    }
+                    else{
+                        res.sendStatus(409)
+                    }
+
+                })
+        }
+
+        else{
+            userModel.updateUser(userId, updatedUser).then(function(user){
+                res.status(200).json({user: user});
+            }, function (error) {
+                res.sendStatus(500);
+            });
+        }
+
     }
 
     function deleteUser(req, res) {
@@ -170,6 +206,8 @@ module.exports = function (app, userModel) {
         findUserById(userId)
             .then(function (user) {
                 user.password = undefined;
+                if(user.secret)
+                    user.secret = undefined;
                 res.status(200).json({user: user});
             }, function (err) {
                 res.sendStatus(404);
@@ -192,6 +230,8 @@ module.exports = function (app, userModel) {
                         user.updatedAt = undefined;
                         user.dateCreated = undefined;
                         user.userType = undefined;
+                        if(user.secret)
+                            user.secret = undefined;
                         res.status(200).json({user: user});
                     }, function (err) {
                         res.sendStatus(404);
@@ -212,6 +252,8 @@ module.exports = function (app, userModel) {
             .findUserByCredentials(username, password)
             .then(function (user) {
                 user.password = undefined;
+                if(user.secret)
+                    user.secret = undefined;
                 res.status(200).json({user: user});
             }, function (err) {
                 res.sendStatus(404);
@@ -228,6 +270,8 @@ module.exports = function (app, userModel) {
                     res.sendStatus(200);
                 else {
                     user.password = undefined; // This is to make sure that password isnt sent
+                    if(user.secret)
+                        user.secret = undefined;
                     res.status(200).json({user: user});
                 }
             }, function (err) {
@@ -246,6 +290,8 @@ module.exports = function (app, userModel) {
                 else {
                     users.map(function(user){
                         user.password = undefined;
+                        if(user.secret)
+                            user.secret = undefined;
                     });
 
                     res.status(200).json({users: users});

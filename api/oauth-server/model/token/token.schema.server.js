@@ -10,7 +10,7 @@ module.exports = function () {
     var TokenSchema = mongoose.Schema({
         accessToken: String,
         userId: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
-        clientId: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'}
+        clientId: String
     }, options);
 
     return TokenSchema;

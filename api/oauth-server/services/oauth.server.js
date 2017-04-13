@@ -13,10 +13,10 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
     server.serializeClient(serializeClient);
     server.deserializeClient(deserializeClient);
 
-    app.get('/api/oauth2/authorize', server.authorization(authorizationForServer), authorizeServer);
+    app.get('/api/oauth2/authorize',  server.authorization(authorizationForServer), authorizeServer);
     app.post('/api/oauth2/authorize', server.decision());
 
-    app.post('/api/oauth2/token', passport.authenticate('client-basic', {session: false}), server.token(), server.errorHandler());
+    app.post('/api/oauth2/token',  passport.authenticate('client-basic', {session: false}), server.token(), server.errorHandler());
 
 
     function authorizeServer(req, res) {
@@ -31,10 +31,9 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
      This authorization code must be exhanged for an access token.
      */
     server.grant(oauth2orize.grant.code(function (client, redirectUri, user, ares, callback) {
-
         var code = {
             authCode: Date.now() + "", //make it regenerating using Date.now
-            clientId: client._id + "",
+            clientId: client.clientId + "",
             redirectUri: redirectUri,
             userId: user._id + ""
         };
@@ -54,15 +53,14 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
      information such as the authorizing user's username.
      */
     server.exchange(oauth2orize.exchange.code(function (client, code, redirectUri, callback) {
-        var clientid = client._id + "";
-
+        var clientid = client.clientId + "";
         codeModel.findAuthByClientId(clientid).then(function (authCode) {
 
             if (authCode === undefined || authCode === null) {
                 // cancel the exchange process, if such an client doesnt exists.
                 return callback(null, false);
             }
-            if ((client._id + "") !== (authCode.clientId + "")) {
+            if ((client.clientId + "") !== (authCode.clientId + "")) {
                 // This is to make sure that same client is requesting access token
                 return callback(null, false);
             }
@@ -106,7 +104,7 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
     function authorizationForServer(clientId, redirectUri, callback) {
         clientId += "";
         userModel
-            .findUserById(clientId)
+            .findUserByClientID(clientId)
             .then(function (user) {
                 callback(null, user, redirectUri);
             }, function (err) {
@@ -116,13 +114,13 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
 
 
     function serializeClient(client, callback) {
-        return callback(null, client._id);
+        return callback(null, client.clientId);
     }
 
     function deserializeClient(id, callback) {
         // This gives us the user details of the app-owner
         id += "";
-        userModel.findUserById(id).then(function (user) {
+        userModel.findUserByClientID(id).then(function (user) {
             if (user.userType === "appOwner")
                 callback(null, user);
             else
