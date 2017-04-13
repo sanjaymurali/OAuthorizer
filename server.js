@@ -3,11 +3,10 @@ var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(expressSession);
 var passport = require('passport');
+var cors = require('cors');
+
 var app = express();
 
-var ejs = require('ejs');
-
-var cors = require('cors');
 app.use(require('express-favicon-short-circuit'));
 
 app.use(cors());
@@ -37,11 +36,9 @@ app.use(expressSession({
     autoRemoveInterval: 1, // In minutes. Default
     cookie: {maxAge: 600000}
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.set('view engine', 'ejs');
-
 
 // configure a public directory to host static content
 app.use(express.static(__dirname + '/public'));

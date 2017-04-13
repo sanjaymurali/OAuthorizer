@@ -9,8 +9,6 @@ module.exports = function (app, commentModel) {
     app.delete('/api/comment/:userid/:postedid', deleteComment);
     app.get('/api/comment/:userid', findCommentByUserId);
 
-
-
     function createComment(req, res) {
         var comment = req.body;
 
