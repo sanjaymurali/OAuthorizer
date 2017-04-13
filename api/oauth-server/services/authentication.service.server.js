@@ -23,9 +23,6 @@ module.exports = function (userModel, tokenModel) {
     passport.use('client-basic', new BasicStrategy(basicStrategy));
     passport.use('code-bearer', new BearerStrategy(bearerStrategy));
     passport.use('user-local', new LocalStrategy(localStrategy));
-    // Passport and Session
-
-
 
     function localStrategy(username, password, done) {
         userModel
@@ -50,8 +47,6 @@ module.exports = function (userModel, tokenModel) {
 
     function basicStrategy(username, password, callback) {
 
-        console.log("usernmae: ", username)
-
         userModel.findUserByUsername(username).then(function (client) {
 
             // No client found with that id or bad password
@@ -66,8 +61,8 @@ module.exports = function (userModel, tokenModel) {
 
     function bearerStrategy(accessToken, callback) {
 
-        var authCode = accessToken + "";
-        tokenModel.findTokenByAuthCode(authCode).then(function(token){
+        var access_Token = accessToken + "";
+        tokenModel.findUserByAccessToken(access_Token).then(function(token){
             if (!token) { return callback(null, false); }
 
             var userId = token.userId + "";
@@ -78,8 +73,6 @@ module.exports = function (userModel, tokenModel) {
                 callback(null, user, { scope: '*' });
             }, function (err) {
                 if (err) { return callback(err); }
-
-                // No user found
             });
 
         }, function (err) {

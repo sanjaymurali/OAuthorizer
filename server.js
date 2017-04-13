@@ -7,9 +7,10 @@ var app = express();
 
 var ejs = require('ejs');
 
-
+var cors = require('cors');
 app.use(require('express-favicon-short-circuit'));
 
+app.use(cors());
 app.use(cookieParser());
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());

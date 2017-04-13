@@ -104,6 +104,13 @@
                 resolve: {loggedIn: loggedIn}
             })
 
+            .state('show-authorization', {
+                url: '/oauth/authorize?client_id&redirect_uri',
+                templateUrl: 'views/oauth/templates/show.auth.view.client.html',
+                controller: 'authController',
+                controllerAs: 'model'
+            })
+
 
             .state('sessionerror', {
                 url: '/sessionexpired',
@@ -112,6 +119,10 @@
             .state('notfound', {
                 url: '/notfound',
                 templateUrl: 'views/errors/templates/notfound.view.client.html'
+            })
+            .state('authproblem', {
+                url: '/authproblem',
+                templateUrl: 'views/errors/templates/authorization.problem.view.client.html'
             });
 
         $urlRouterProvider.otherwise('/');

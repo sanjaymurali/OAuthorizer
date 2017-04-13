@@ -5,15 +5,8 @@
 module.exports = function () {
 
     var api = {
-        findTokenByAuthCode: findTokenByAuthCode,
+        findUserByAccessToken: findUserByAccessToken,
         createToken: createToken
-        /*createComment: createComment,
-        insertCommentForUser: insertCommentForUser,
-        findCommentByUserId: findCommentByUserId,
-        findCommentByCommentorId: findCommentByCommentorId,
-        updateComment: updateComment,
-        deleteComment: deleteComment
-        /*findCommentById: findCommentById*/
     };
 
     var mongoose = require('mongoose');
@@ -27,13 +20,13 @@ module.exports = function () {
 
     return api;
 
-    function findTokenByAuthCode(authCode) {
+    function findUserByAccessToken(accessToken) {
         var deferred = q.defer();
-        TokenModel.findOne({'authCode': authCode}, function(err, token) {
+        TokenModel.findOne({'accessToken': accessToken}, function(err, user) {
             if(err)
-                deferred.reject(err)
+                deferred.reject(err);
             else
-                deferred.resolve(token);
+                deferred.resolve(user);
         });
 
         return deferred.promise;

@@ -8,7 +8,7 @@ module.exports = function () {
     var options = {collection: 'tokens', timestamps: {createdAt: 'dateCreated', default: Date.now}};
 
     var TokenSchema = mongoose.Schema({
-        authCode: String,
+        accessToken: String,
         userId: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
         clientId: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'}
     }, options);

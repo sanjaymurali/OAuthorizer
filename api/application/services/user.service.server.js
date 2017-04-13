@@ -29,15 +29,18 @@ module.exports = function (app, userModel) {
     var upload = multer({storage: storage});
 
     app.post('/api/login', passport.authenticate('user-local'), login);
+
     app.post('/api/logout', logout);
     app.get('/api/checksession', checkSessionOrLoggedIn);
 
     app.post('/api/user', createUser);
     app.post('/api/register', register);
     app.get('/api/user', findUser);
-    app.get('/api/user/:userId',authenticationMiddleware, findUserById);
+    app.get('/api/user/:userId', findUserById);
     app.put('/api/user/:userId',authenticationMiddleware, updateUser);
     app.delete('/api/user/:userId',authenticationMiddleware, deleteUser);
+
+    //Externally available.
     app.get('/api/oauth/user/:userId', passport.authenticate('code-bearer', {session: false}),findUserByIdOauth);
 
     app.post("/api/upload", upload.single('file'), checkSessionMiddleware, uploadImage);

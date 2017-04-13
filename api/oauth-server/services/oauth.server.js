@@ -40,7 +40,7 @@ module.exports = function(app, userModel, codeModel, tokenModel) {
         // Create a new authorization code
         console.log("Grant: Client: ", client);
         var code = {
-            authCode: "alwayssame", //make it regenerating using Date.now
+            authCode: Date.now() + "", //make it regenerating using Date.now
             clientId: client._id + "",
             redirectUri: redirectUri,
             userId: user._id + ""
@@ -56,7 +56,7 @@ module.exports = function(app, userModel, codeModel, tokenModel) {
 
     // Exchange authorization codes for access tokens
     server.exchange(oauth2orize.exchange.code(function(client, code, redirectUri, callback) {
-        console.log("Inside exchange", code)
+        console.log("Inside exchange: ", code);
 
         console.log("Client: ", client);
 
@@ -77,7 +77,7 @@ module.exports = function(app, userModel, codeModel, tokenModel) {
 
                 // Create a new access token
                 var token = {
-                    authCode: "alwayssame",
+                    accessToken: Date.now() + "",
                     clientId: authCode.clientId + "",
                     userId: authCode.userId + ""
                 };
@@ -102,7 +102,6 @@ module.exports = function(app, userModel, codeModel, tokenModel) {
 // User authorization endpoint
 
    function somefunction(clientId, redirectUri, callback) {
-       console.log("somefunc: ", clientId);
        clientId += "";
         userModel
             .findUserById(clientId)
@@ -117,10 +116,8 @@ module.exports = function(app, userModel, codeModel, tokenModel) {
 
 
     function responsefunc(req, res){
-       console.log("Hit!");
-       console.log("req.user: ", req.user);
-       console.log("req.oauth2.client: ", req.oauth2.client);
-        res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client });
+       console.log("In here!")
+        res.json({ transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client });
     }
 
 
@@ -130,6 +127,3 @@ module.exports = function(app, userModel, codeModel, tokenModel) {
     app.post('/api/oauth2/token', passport.authenticate('client-basic', {session: false}), server.token(), server.errorHandler());
 
 }
-
-
-
