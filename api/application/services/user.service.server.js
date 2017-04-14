@@ -4,15 +4,6 @@
 
 module.exports = function (app, userModel) {
 
-    /*
-       have a nav menu item in the model, have a set of items that need to
-       go in there based on appowner or user.
-       implement a service that retrieves the menu items based on user id and
-       create a nav bar directive that populates from the service.
-     */
-
-    //TODO: create bcrypt passwords!
-
     var multer = require('multer');
     var path = require('path');
     var passport = require('passport');
@@ -43,13 +34,12 @@ module.exports = function (app, userModel) {
     app.delete('/api/user/:userId',authenticationMiddleware, deleteUser);
 
     //Externally available.
-    app.get('/api/oauth/user/:userId', passport.authenticate('code-bearer', {session: false}),findUserByIdOauth);
+    app.get('/api/oauth/user/:userId', passport.authenticate('code-bearer', {session: false}), findUserByIdOauth);
 
     app.post("/api/upload", upload.single('file'), checkSessionMiddleware, uploadImage);
 
     function uploadImage(req, res) {
         userModel.findUserById(req.user._id).then(function(user){
-            console.log(req.file.filename);
             user.profileimage = "/uploads/" + req.file.filename;
             user.save();
             res.sendStatus(200);

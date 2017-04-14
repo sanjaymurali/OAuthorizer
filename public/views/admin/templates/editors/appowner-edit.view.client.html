@@ -1,0 +1,106 @@
+<form name="model.appOwnerEditorForm" ng-submit="model.update(model.userSelectedForEditing, model.file)">
+    <label for="first">First Name</label>
+    <input ng-model="model.userSelectedForEditing.firstName"
+           id="first"
+           class="form-control"
+           type="text"
+           placeholder="First Name"/>
+
+    <label for="last">Last Name</label>
+    <input ng-model="model.userSelectedForEditing.lastName"
+           id="last"
+           class="form-control"
+           type="text"
+           placeholder="Last Name"/>
+
+    <label for="email">Email</label>
+    <input ng-model="model.userSelectedForEditing.email"
+           id="email"
+           class="form-control"
+           type="email"
+           placeholder="Email"/>
+
+    <label>Username</label>
+    <input ng-model="model.userSelectedForEditing.username"
+           class="form-control"
+           type="text"
+           placeholder="Username"/>
+
+    <label>Password</label>
+    <input class="form-control"
+           type="password"
+           ng-model="model.userSelectedForEditing.password"
+           placeholder="Password"/>
+
+    <hr>
+
+
+    <label class="text-success">Your App's Public Profile</label>
+    <br/>
+    <label for="appurl">Application URL</label>
+    <input ng-model="model.userSelectedForEditing.appurl"
+           id="appurl"
+           class="form-control"
+           type="text"
+           placeholder="App URL"/>
+
+    <label for="aboutapp">About Your App</label>
+    <textarea
+            rows="3"
+            class="form-control"
+            id="aboutapp"
+            placeholder="About Your App"
+            ng-model="model.userSelectedForEditing.about">{{model.user.about}}</textarea>
+
+    <label for="apppicture">APP Image</label>
+    <input type="file"
+           name="apppicture"
+           ngf-select
+           ng-model="model.file"
+           accept="'image/*'"
+           id="apppicture"
+           class="form-control"/>
+
+    <hr>
+
+    <label class="text-success">Application Specific</label>
+    <br/>
+
+    <label for="clientId">Client ID</label>
+    <input ng-model="model.userSelectedForEditing.clientId",
+           name="clientId",
+           id="clientId"
+           class="form-control"
+           type="text"
+           placeholder="clientId"/>
+
+    <label for="secret">Secret</label>
+    <input ng-model="model.userSelectedForEditing.secret"
+           id="secret"
+           class="form-control"
+           type="text"
+           placeholder="Secret"/>
+
+
+    <label for="redirectUri">Redirect URI</label>
+    <input ng-model="model.userSelectedForEditing.redirectUri"
+           id="redirectUri"
+           class="form-control"
+           type="text"
+           placeholder="Redirect URI"/>
+
+
+    <label for="appname">APP Name</label>
+    <input ng-model="model.userSelectedForEditing.appname"
+           id="appname"
+           class="form-control"
+           type="text"
+           placeholder="APP Name"/>
+
+
+    <button type="submit"
+            class="btn btn-primary btn-block">
+        Update
+    </button>
+
+</form>

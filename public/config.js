@@ -37,13 +37,32 @@
             return deferred.promise;
         };
 
+        var guestLogin = function ($q, $stateParams, $state, UserService) {
+            var deferred = $q.defer();
+            UserService
+                .checkSession()
+                .then(function (response) {
+                    if(!response.data.success) {
+                        UserService.setUser(null);
+                        deferred.resolve(null);
+                    }
+                    else{
+                        UserService.setUser(response.data.user);
+                        deferred.resolve(response.data.user);
+                    }
+                }, function(err){
+                    UserService.setUser(null);
+                    deferred.resolve(null);
+                });
+            return deferred.promise;
+        };
+
         var loggedIn = function ($q, $stateParams, $state, UserService) {
             var userid = $stateParams.uid + "";
             var deferred = $q.defer();
             UserService
                 .loggedIn(userid)
                 .then(function (response) {
-                    console.log(response)
                     if(!response.data.success) {
                         deferred.reject(null);
                         $state.go('sessionerror');
@@ -59,9 +78,38 @@
             return deferred.promise;
         };
 
+        var adminLogin = function ($q, $stateParams, $state, AdminService, UserService) {
+            var deferred = $q.defer();
+            AdminService
+                .checkSession()
+                .then(function (response) {
+                    if(!response.data.success) {
+                        deferred.reject(null);
+                        $state.go('sessionerror');
+                    }
+                    else{
+                        UserService.setUser(response.data.user);
+                        deferred.resolve(response.data.user)
+                    }
+                }, function(err){
+                    deferred.reject();
+                    $state.go('sessionerror');
+                });
+            return deferred.promise;
+        };
+
+
         $stateProvider
             .state('index', {
-                url: '/'
+                url: '/',
+                templateUrl: 'views/landing/templates/guest.landing.view.client.html',
+                controller: 'guestController',
+                controllerAs: 'model',
+                resolve: {guestLogin: guestLogin}
+            })
+            .state('about', {
+                url: '/aboutus',
+                templateUrl: 'views/landing/templates/about.us.view.client.html'
             })
             .state('login', {
                 url: '/login',
@@ -102,6 +150,27 @@
                 controller: 'profileEditController',
                 controllerAs: 'model',
                 resolve: {loggedIn: loggedIn}
+            })
+            .state('admin', {
+                url: '/admin',
+                templateUrl: 'views/admin/templates/admin.view.client.html',
+                controller: 'adminController',
+                controllerAs: 'model',
+                resolve: {adminLogin: adminLogin} // Change!
+            })
+            .state('adminCreateUser', {
+                url: '/admincreateuser',
+                templateUrl: 'views/admin/templates/admin.create.user.view.client.html',
+                controller: 'adminCreateUserController',
+                controllerAs: 'model',
+                resolve: {adminLogin: adminLogin} // Change!
+            })
+            .state('adminEditUser', {
+                url: '/adminedituser/:uid',
+                templateUrl: 'views/admin/templates/admin.edit.user.view.client.html',
+                controller: 'adminEditUserController',
+                controllerAs: 'model',
+                resolve: {adminLogin: adminLogin} // Change!
             })
 
             .state('show-authorization', {

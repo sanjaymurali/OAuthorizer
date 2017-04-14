@@ -10,6 +10,8 @@
 
             vm.noAppsToShow = false;
 
+            vm.currentUser = UserService.getUser();
+
             UserService
                 .findUsersByType("appOwner")
                 .then(function(response){

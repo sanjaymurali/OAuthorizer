@@ -29,8 +29,6 @@ module.exports = function () {
 
         var deferred = q.defer();
 
-        console.log(comment);
-        
         CommentModel.create(comment, function (err, comment) {
             if(err)
                 deferred.reject(err);
@@ -103,16 +101,12 @@ module.exports = function () {
                     //index = comment.comments.indexOf(postedid);
                     for(var i=0; i < comment.comments.length; i++) {
                         if((comment.comments[i].postedid + "") === postedid) {
-                            console.log(comment.comments[i])
                             index = i;
                             break;
                         }
                     }
-                    console.log("index: ", index);
                     x = comment.comments.splice(index,1);
-                    console.log("X: ", x);
                     comment.save();
-                    console.log("Deleted Comment: " , comment.comments[index]);
                     deferred.resolve(comment)
                 }
             }
@@ -146,7 +140,6 @@ module.exports = function () {
                 deferred.reject(err);
             else{
                 if(!comment){
-                    console.log("In here!")
                     deferred.resolve(null);
                 }
                 else{

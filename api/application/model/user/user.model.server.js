@@ -12,7 +12,8 @@ module.exports = function () {
         findUserByCredentials: findUserByCredentials,
         findUserByUsername: findUserByUsername,
         findUsersByType: findUsersByType,
-        findUserByClientID: findUserByClientID
+        findUserByClientID: findUserByClientID,
+        allUsers: allUsers
     };
 
     var mongoose = require('mongoose');
@@ -42,7 +43,23 @@ module.exports = function () {
         registeredApps: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
     }, options));
 
+    UserModel.discriminator('admin', new mongoose.Schema({
+    }, options));
+
     return api;
+
+
+    function allUsers() {
+        var deferred = q.defer();
+        UserModel.find({}, function (err, users) {
+            if(err)
+                deferred.reject(err);
+            else
+                deferred.resolve(users);
+        });
+
+        return deferred.promise;
+    }
 
     function createUser(user) {
         var deferred = q.defer();

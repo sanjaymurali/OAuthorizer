@@ -17,62 +17,6 @@
 </head>
 <body class="ng-cloak">
 
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ui-sref="index">OAutharizer</a>
-        </div>
-
-        <div id="main-navbar" class="collapse navbar-collapse">
-            <!-- Navbar items, links to various pages -->
-            <ul class="nav navbar-nav">
-                <li ui-sref-active="active"><a ui-sref="index">Home</a></li>
-                <!--<li class="dropdown closed">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Movie
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active"><a ui-sref="favorites">Favorites</a></li>
-                        <li ui-sref-active="active"><a ui-sref="movies">Movies</a></li>
-                        <li ui-sref-active="active"><a ui-sref="nearby">Theatres Nearby</a></li>
-                        <li ui-sref-active="active"><a ui-sref="classify_genres">Classify Movies</a></li>
-                        <li ui-sref-active="active"><a ui-sref="biography">Actor Bio</a></li>
-                        <li ui-sref-active="active" ng-show="isValidSession"><a ui-sref="suggestions">Movie
-                            Suggestions</a></li>
-                    </ul>
-                </li>-->
-                <!-- Role based here -->
-
-                <!--<li class="dropdown closed" ng-show="isModerator">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Admin
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active"><a ui-sref="adminNews">Add News</a></li>
-                        <li ui-sref-active="active"><a ui-sref="adminMovie">Add Movie</a></li>
-                        <li ui-sref-active="active"><a ui-sref="adminTrivia">Add Trivia</a></li>
-                        <li ui-sref-active="active"><a ui-sref="updateMovies">Update Movies</a></li>
-                        <li ui-sref-active="active"><a ui-sref="approveComment">Approve Comment</a></li>
-                        <li ui-sref-active="active"><a ui-sref="addActor">Add Actors</a></li>
-                        <li ui-sref-active="active" ng-show="isAdmin"><a ui-sref="makeMod">Add Moderator</a></li>
-                    </ul>
-                </li>-->
-
-                <li ui-sref-active="active"><a ui-sref="register">Register</a></li>
-                <li ui-sref-active="active"><a ui-sref="login">Login</a></li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
-
-
-
     <ui-view></ui-view>
 
 
@@ -91,25 +35,27 @@
 <script src="config.js"></script>
 
 <script src="services/user.service.client.js"></script>
+<script src="services/admin.service.client.js"></script>
 <script src="services/comment.service.client.js"></script>
 <script src="services/oauth.service.client.js"></script>
-
-
 <script src="services/helper.service.client.js"></script>
 
 
+<script src="views/landing/controllers/guest.controller.client.js"></script>
 <script src="views/user/controllers/login.controller.client.js"></script>
 <script src="views/user/controllers/register.controller.js"></script>
 <script src="views/user/controllers/profile.controller.client.js"></script>
 <script src="views/user/controllers/profile-editor.controller.client.js"></script>
 <script src="views/application/controllers/application.profile.controller.client.js"></script>
 <script src="views/application/controllers/allapps.controller.client.js"></script>
-
 <script src="views/oauth/controllers/show.auth.view.controller.js"></script>
 
+<script src="views/admin/controllers/admin.controller.client.js"></script>
+<script src="views/admin/controllers/admin.create.user.controller.js"></script>
+<script src="views/admin/controllers/admin.edit.user.controller.client.js"></script>
 
 <script src="directives/nav.common.footer.directive.js"></script>
-<script src="directives/wbdv-sortable.js"></script>
+<script src="directives/nav.common.header.directive.js"></script>
 
 </body>
 </html>

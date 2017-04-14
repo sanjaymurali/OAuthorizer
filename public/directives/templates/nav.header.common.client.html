@@ -14,37 +14,16 @@
             <!-- Navbar items, links to various pages -->
             <ul class="nav navbar-nav">
                 <li ui-sref-active="active"><a ui-sref="index">Home</a></li>
-                <!--<li class="dropdown closed">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Movie
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active"><a ui-sref="favorites">Favorites</a></li>
-                        <li ui-sref-active="active"><a ui-sref="movies">Movies</a></li>
-                        <li ui-sref-active="active"><a ui-sref="nearby">Theatres Nearby</a></li>
-                        <li ui-sref-active="active"><a ui-sref="classify_genres">Classify Movies</a></li>
-                        <li ui-sref-active="active"><a ui-sref="biography">Actor Bio</a></li>
-                        <li ui-sref-active="active" ng-show="isValidSession"><a ui-sref="suggestions">Movie
-                            Suggestions</a></li>
-                    </ul>
-                </li>-->
-                <!-- Role based here -->
+                <!-- Guest -->
+                <li ui-sref-active="active" ng-if="guest"><a ui-sref="register">Register</a></li>
+                <li ui-sref-active="active" ng-if="guest"><a ui-sref="login">Login</a></li>
 
-                <!--<li class="dropdown closed" ng-show="isModerator">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Admin
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ui-sref-active="active"><a ui-sref="adminNews">Add News</a></li>
-                        <li ui-sref-active="active"><a ui-sref="adminMovie">Add Movie</a></li>
-                        <li ui-sref-active="active"><a ui-sref="adminTrivia">Add Trivia</a></li>
-                        <li ui-sref-active="active"><a ui-sref="updateMovies">Update Movies</a></li>
-                        <li ui-sref-active="active"><a ui-sref="approveComment">Approve Comment</a></li>
-                        <li ui-sref-active="active"><a ui-sref="addActor">Add Actors</a></li>
-                        <li ui-sref-active="active" ng-show="isAdmin"><a ui-sref="makeMod">Add Moderator</a></li>
-                    </ul>
-                </li>-->
+                <!-- all users -->
+                <li ui-sref-active="active" ng-if="user || appOwner || admin"><a ui-sref="all-apps">All Apps</a></li>
+                <li ui-sref-active="active" ng-if="user || appOwner || admin"><a ui-sref="profile-edit({uid: userid})">Profile Edit</a></li>
 
-                <li ui-sref-active="active"><a ui-sref="register">Register</a></li>
-                <li ui-sref-active="active"><a ui-sref="profile({uid: userid})">User Profile</a></li>
+                <!-- admin -->
+                <li ui-sref-active="active" ng-if="admin"><a ui-sref="admin">Admin</a></li>
             </ul>
 
         </div>

@@ -9,19 +9,16 @@
 
     <div class="alert alert-success" ng-show="model.message">
         {{model.message}}
+        Do you wish to go back to the admin panel? <a class="alert-link" ui-sref="admin">Admin Panel</a>
     </div>
 
-    <div ng-switch="model.user.userType">
+    <div ng-switch="model.userSelectedForEditing.userType">
         <div ng-switch-when="normalUser">
-            <ng-include src="'views/user/templates/editors/normaluser-edit.view.client.html'"></ng-include>
-            <br/>
-        </div>
-        <div ng-switch-when="admin">
-            <ng-include src="'views/user/templates/editors/normaluser-edit.view.client.html'"></ng-include>
+            <ng-include src="'views/admin/templates/editors/normaluser-edit.view.client.html'"></ng-include>
             <br/>
         </div>
         <div ng-switch-when="appOwner">
-            <ng-include src="'views/user/templates/editors/appowner-edit.view.client.html'"></ng-include>
+            <ng-include src="'views/admin/templates/editors/appowner-edit.view.client.html'"></ng-include>
             <br/>
         </div>
     </div>

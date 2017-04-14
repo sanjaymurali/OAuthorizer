@@ -20,10 +20,6 @@
 
             vm.currentUser = UserService.getUser();
             vm.showLogin = true;
-            console.log(vm.currentUser)
-
-
-            console.log(vm.clientId, vm.redirectUri);
 
             vm.login = login;
             vm.deny = deny;
@@ -31,7 +27,6 @@
             if(!vm.showLogin) {
                 AuthService.getAuthorization(vm.clientId, vm.redirectUri).then(function(response){
                     var data = response.data;
-                    console.log(data)
                     vm.transactionID = data.transactionID;
                     vm.clientname = data.client.appname;
                 }, function(err){
@@ -64,7 +59,6 @@
                                 $state.go('authproblem');
                             });
                             vm.showLogin = false;
-                            console.log(vm.currentUser)
                         }
                     }, function (error) {
                         vm.error = 'User not found';

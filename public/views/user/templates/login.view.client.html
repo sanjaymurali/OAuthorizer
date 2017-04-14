@@ -1,3 +1,5 @@
+<nav-header-common userType="Guest"></nav-header-common>
+
 <div id="login" class="container">
 <h1>Login</h1>
 <div class="alert alert-danger" ng-show="model.error">
@@ -37,5 +39,19 @@
         <button type="submit" class="btn btn-primary btn-block">Login</button>
         <a class="btn btn-success btn-block"
            ui-sref="register">Register</a>
+        <br/>
     </form>
 </div>
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand pull-right" ui-sref="about">
+                <span class="glyphicon glyphicon-sunglasses"></span>
+            </a>
+        </div>
+    </div>
+</nav>
+

@@ -21,7 +21,6 @@ module.exports = function (app, commentModel) {
             commentModel.findCommentByUserId(comment.userid).then(function(response){
                 if(!response){ //Create a new comment for that app
                     commentModel.createComment(comment).then(function(response){
-                        console.log(response);
                         res.json({success: true, message: "Comment Created!"});
                     }, function(err){
                         res.json({success: false, message: "Comment Couldnt be Created!"});
@@ -75,7 +74,6 @@ module.exports = function (app, commentModel) {
         var postedid = req.params.postedid + "";
 
         var userid = !req.user? "" : (req.user._id + "");
-        console.log("req.user:" , userid);
         if(req.isAuthenticated() && (postedid === userid)) {
             commentModel.deleteComment(useridfromclient, postedid).then(function(response){
                 res.sendStatus(200);

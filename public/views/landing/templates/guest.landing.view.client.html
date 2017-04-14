@@ -1,0 +1,31 @@
+<nav-header-common userType="{{model.user.userType}}" uid="{{model.user._id}}"></nav-header-common>
+
+<div ng-if="model.guestConfirm">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Hello!</h1>
+            <p>Please consider registering in our site.</p>
+            <p><a class="btn btn-primary btn-lg" ui-sref="register" role="button">Register &raquo;</a></p>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<div ng-if="model.guestConfirm === false">
+    <div class="container">
+        Hey {{model.user.username}}!
+    </div>
+</div>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand pull-right" ui-sref="about">
+                <span class="glyphicon glyphicon-sunglasses"></span>
+            </a>
+        </div>
+    </div>
+</nav>

@@ -1,21 +1,27 @@
 (function () {
     angular
         .module("MainApp")
-        .controller("profileEditController", profileEditController);
+        .controller("adminEditUserController", adminEditUserController);
 
-    function profileEditController(Upload, $state, $stateParams, UserService, $window) {
+    function adminEditUserController(Upload, $state, $stateParams, AdminService, $window, UserService) {
         var vm = this;
 
 
         function init() {
-            $window.document.title = "Profile";
+            $window.document.title = "Edit User | Admin";
             var user = {};
-            vm.userId = $stateParams['uid'];
+
             vm.user = UserService.getUser();
+            vm.userId = $stateParams['uid'] + "";
+
+            AdminService.findUserById(vm.userId).then(function(response){
+                vm.userSelectedForEditing = response.data.user;
+            }, function(err){
+                vm.error = "User not Found!"
+            });
+
 
             vm.update = update;
-            vm.unregisterUser = unregisterUser;
-            vm.logout = logout;
         }
 
         init();
@@ -31,7 +37,7 @@
                 if(imageFile && filename) {
 
                     Upload.upload({
-                        url: '/api/upload',
+                        url: '/api/admin/upload/'+ vm.userId,
                         arrayKey: '',
                         data: {
                             file: Upload.dataUrltoBlob(imageFile, filename)
@@ -40,7 +46,7 @@
                 }
                 else if(imageFile) {
                     Upload.upload({
-                        url: '/api/upload',
+                        url: '/api/admin/upload/'+vm.userId,
                         arrayKey: '',
                         data: {
                             file: imageFile
@@ -48,7 +54,7 @@
                     });
                 }
 
-            UserService
+            AdminService
                 .updateUser(vm.userId, user)
                 .then(function (response) {
                     if (response.statusText === "OK") {
@@ -66,25 +72,6 @@
 
         }
 
-        function unregisterUser(user) {
-            var answer = confirm("Are you sure?");
-            if (answer) {
-                UserService
-                    .deleteUser(user._id)
-                    .then(function (response) {
-                        if (response.statusText === "OK")
-                            $state.go('login');
-                        else
-                            vm.error = 'unable to remove user';
-                    });
-            }
-        }
-
-        function logout() {
-            UserService.logout();
-            UserService.setUser(undefined);
-            $state.go('login');
-        }
 
         function cleanUpAlerts() {
             vm.success = false;

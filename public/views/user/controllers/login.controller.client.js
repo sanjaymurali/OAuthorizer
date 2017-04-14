@@ -30,6 +30,7 @@
                             vm.error = 'User not found';
                         }
                         else {
+                            UserService.setUser(response.data.user);
                             $state.go('profile', {uid: response.data.user._id});
                         }
                     }, function (error) {

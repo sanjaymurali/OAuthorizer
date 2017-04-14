@@ -49,7 +49,6 @@ module.exports = function (userModel, tokenModel) {
     }
 
     function basicStrategy(username, password, callback) {
-        console.log(username, password)
         userModel.findUserByClientID(username).then(function (client) {
 
             if (!client) {

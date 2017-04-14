@@ -1,0 +1,73 @@
+<form ng-submit="model.update(model.userSelectedForEditing, model.croppedImage, model.file.name)">
+
+    <div class="row">
+        <div class="col-md-6">
+
+    <label for="first">First Name</label>
+    <input ng-model="model.userSelectedForEditing.firstName"
+           id="first"
+           class="form-control"
+           type="text"
+           placeholder="First Name"/>
+        </div>
+        <div class="col-md-6">
+    <label for="last">Last Name</label>
+    <input ng-model="model.userSelectedForEditing.lastName"
+           id="last"
+           class="form-control"
+           type="text"
+           placeholder="Last Name"/>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+    <label for="email">Email</label>
+    <input ng-model="model.userSelectedForEditing.email"
+           id="email"
+           class="form-control"
+           type="email"
+           placeholder="Email"/>
+        </div>
+        <div class="col-md-4">
+    <label>Username</label>
+    <input ng-model="model.userSelectedForEditing.username"
+           class="form-control"
+           type="text"
+           placeholder="Username"/>
+        </div>
+        <div class="col-md-4">
+        <label>Password</label>
+        <input class="form-control"
+               type="password"
+               placeholder="Password"
+               ng-model="model.userSelectedForEditing.password"/>
+        </div>
+    </div>
+    <div class="form-group">
+    <label for="apppicture">Update Profile Image</label>
+    <input type="file"
+           name="apppicture"
+           ngf-select
+           ng-model="model.file"
+           accept="'image/*'"
+           id="apppicture"
+           class="form-control"/>
+
+    <div ngf-drop ng-model="model.file" ngf-pattern="image/*"
+         class="crop-area">
+        <img-crop image="model.file  | ngfDataUrl"
+                  result-image="model.croppedImage" ng-init="model.croppedImage = ''">
+        </img-crop>
+    </div>
+
+    <div ng-if="model.file">
+        <div id="preview">Preview</div>
+        <img ng-src="{{model.croppedImage}}" />
+    </div>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary btn-block">
+        Update
+    </button>
+</form>

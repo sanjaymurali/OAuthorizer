@@ -161,11 +161,9 @@
 
         function deleteComment(userid, postedid, index) {
             cleanUpAlerts();
-            console.log(vm.comments.comments, index)
             CommentService.deleteComment(userid, postedid).then(function(response){
                 vm.success = true;
                 vm.successMessage = "Successfully Deleted!";
-                console.log(vm.comments.comments);
                 vm.comments.comments.splice(index,1);
 
                 if(vm.comments.comments || vm.comments.comments.length === 0){

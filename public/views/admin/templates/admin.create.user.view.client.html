@@ -1,10 +1,16 @@
 <nav-header-common userType="Guest"></nav-header-common>
 
 <div class="container">
-<h1>Register</h1>
+<h1>Create User | Admin</h1>
 <div class="alert alert-danger" ng-show="model.error">
     {{model.error}}
 </div>
+
+<div class="alert alert-success" ng-show="model.success">
+    {{model.success}} <br/>
+    Do you wish to go back to the admin panel? <a class="alert-link" ui-sref="admin">Admin Panel</a>
+</div>
+
 
 <form name="model.registerForm" ng-submit="model.register(model.user)" novalidate>
 
@@ -65,7 +71,7 @@
 
     <button type="submit" class="btn btn-primary btn-block">Register</button>
     <a class="btn btn-danger btn-block"
-       ui-sref="login">Cancel</a>
+       ui-sref="admin">Cancel</a>
 
 </form>
 </div>
