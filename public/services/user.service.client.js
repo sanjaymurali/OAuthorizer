@@ -26,6 +26,8 @@
             "checkSession": checkSession,
             "loggedIn": loggedIn,
             "register": register,
+            "followUser": followUser,
+            "unfollowUser": unfollowUser,
             "search": search,
             "getUser": getUser,
             "setUser": setUser
@@ -74,6 +76,24 @@
 
         function search(query) {
             return $http.get(apiURL + 'search', {params: {searchquery: query}});
+        }
+
+        function followUser(currentUser, followingUser) {
+            var payload = {
+                currentUser: currentUser,
+                followingUser: followingUser
+            };
+
+            return $http.put(apiURL + 'follow', payload);
+        }
+
+        function unfollowUser(currentUserId, followingId) {
+            var payload = {
+                currentUserId: currentUserId,
+                followingId: followingId
+            };
+
+            return $http.put(apiURL + 'unfollow', payload);
         }
 
         function login(user) {

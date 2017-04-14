@@ -6,7 +6,6 @@ module.exports = function (userModel, tokenModel) {
     var passport = require('passport');
     var bcrypt = require("bcrypt-nodejs");
 
-
     // For normal user login
     var LocalStrategy = require('passport-local').Strategy;
 

@@ -11,7 +11,6 @@ module.exports = function () {
 
     var mongoose = require('mongoose');
 
-
     var q = require('q');
     mongoose.Promise = global.Promise;
 
@@ -44,9 +43,5 @@ module.exports = function () {
 
         return deferred.promise;
     }
-
-
-
-
 
 };

@@ -121,7 +121,8 @@
                 url: '/register',
                 templateUrl: 'views/user/templates/register.view.client.html',
                 controller: 'registerController',
-                controllerAs: 'model'
+                controllerAs: 'model',
+                resolve: {guestLogin: guestLogin}
             })
             .state('profile', {
                 url: '/user/:uid',

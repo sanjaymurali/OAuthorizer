@@ -39,13 +39,25 @@ module.exports = function () {
         }, options));
 
     UserModel.discriminator('normalUser', new mongoose.Schema({
-        followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
-        following: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}]
+        followers: [{
+            userid: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
+            username: String
+        }],
+        following: [{
+            userid: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
+            username: String
+        }]
     }, options));
 
     UserModel.discriminator('admin', new mongoose.Schema({
-        followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
-        following: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}]
+        followers: [{
+            userid: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
+            username: String
+        }],
+        following: [{
+            userid: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
+            username: String
+        }]
     }, options));
 
     return api;

@@ -3,10 +3,11 @@
         .module("MainApp")
         .controller("allAppsController", allAppsController);
 
-    function allAppsController($state, UserService) {
+    function allAppsController($state, UserService, $window) {
         var vm = this;
 
         function init() {
+            $window.document.title = "All Apps"; //Way to set the title of a page
 
             vm.noAppsToShow = false;
 

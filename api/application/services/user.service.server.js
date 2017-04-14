@@ -7,8 +7,8 @@ module.exports = function (app, userModel) {
     var multer = require('multer');
     var path = require('path');
     var passport = require('passport');
-
     var bcrypt = require("bcrypt-nodejs");
+    var upload = multer({storage: storage});
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -19,27 +19,116 @@ module.exports = function (app, userModel) {
         }
     });
 
-    var upload = multer({storage: storage});
-
     app.post('/api/login', passport.authenticate('user-local'), login);
-
+    app.post('/api/register', register);
     app.post('/api/logout', logout);
     app.get('/api/checksession', checkSessionOrLoggedIn);
 
-    app.post('/api/user', createUser);
-    app.post('/api/register', register);
     app.get('/api/user', findUser);
+    app.post('/api/user', createUser);
     app.get('/api/user/:userId', findUserById);
     app.put('/api/user/:userId',authenticationMiddleware, updateUser);
     app.delete('/api/user/:userId',authenticationMiddleware, deleteUser);
-
-    app.get('/api/search', checkSessionMiddleware, search);
-
-    //Externally available.
-    app.get('/api/oauth/user/:userId', passport.authenticate('code-bearer', {session: false}), findUserByIdOauth);
-
     app.post("/api/upload", upload.single('file'), checkSessionMiddleware, uploadImage);
 
+    app.put('/api/follow', followUser);
+    app.put('/api/unfollow', unFollowUser);
+    app.get('/api/search', checkSessionMiddleware, search);
+
+    //Externally available for Client access.
+    app.get('/api/oauth/user/:userId', passport.authenticate('code-bearer', {session: false}), findUserByIdOauth);
+
+    function followUser(req, res) {
+        var followData = req.body;
+
+        var currentUser = followData.currentUser;
+        var followingUser = followData.followingUser;
+
+        var currentUserId = currentUser.userid;
+        var followingId = followingUser.userid;
+
+        console.log(currentUserId, followingId);
+
+        userModel.findUserById(currentUserId).then(function(user){
+            if(!user)
+                res.sendStatus(500);
+            else {
+                if(user.following)
+                    user.following.push(followingUser);
+                else {
+                    user.following = [];
+                    user.following.push(followingUser);
+                }
+
+                user.save();
+            }
+        }, function(err){
+            res.sendStatus(500);
+        });
+
+        userModel.findUserById(followingId).then(function(user){
+            if(!user)
+                res.sendStatus(500);
+            else {
+                if(user.followers)
+                    user.followers.push(currentUser);
+                else {
+                    user.followers = [];
+                    user.followers.push(currentUser);
+                }
+
+                user.save();
+            }
+        }, function(err){
+            res.sendStatus(500);
+        });
+
+        res.sendStatus(200);
+    }
+
+    function unFollowUser(req, res) {
+        var followData = req.body;
+        var currentUserId = followData.currentUserId + "";
+        var followingId = followData.followingId + "";
+
+        console.log(currentUserId, followingId);
+
+        userModel.findUserById(currentUserId).then(function(user){
+            if(!user)
+                res.sendStatus(500);
+            else {
+                var index = user.following.indexOf(user.following.find(function(userid){
+                    return (userid.userid + "") === followingId;
+                }));
+
+                console.log(index)
+
+                user.following.splice(index, 1);
+
+                user.save();
+            }
+        }, function(err){
+            res.sendStatus(500);
+        });
+
+        userModel.findUserById(followingId).then(function(user){
+            if(!user)
+                res.sendStatus(500);
+            else {
+
+                var index = user.followers.indexOf(user.followers.find(function(userid){
+                    return (userid.userid + "") === currentUserId;
+                }));
+
+                user.followers.splice(index, 1);
+                user.save();
+            }
+        }, function(err){
+            res.sendStatus(500);
+        });
+
+        res.sendStatus(200);
+    }
 
     function search(req, res) {
 

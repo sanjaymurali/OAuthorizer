@@ -165,8 +165,8 @@
                 vm.success = true;
                 vm.successMessage = "Successfully Deleted!";
                 vm.comments.comments.splice(index,1);
-
-                if(vm.comments.comments || vm.comments.comments.length === 0){
+                console.log(vm.comments.comments)
+                if(!vm.comments.comments || vm.comments.comments.length === 0){
                     vm.firstToComment = true;
                 }
                 vm.editingComment = false;

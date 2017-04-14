@@ -7,8 +7,8 @@ module.exports = function (app, userModel) {
     var multer = require('multer');
     var path = require('path');
     var passport = require('passport');
-
     var bcrypt = require("bcrypt-nodejs");
+    var upload = multer({storage: storage});
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -19,17 +19,17 @@ module.exports = function (app, userModel) {
         }
     });
 
-    var upload = multer({storage: storage});
 
-    app.get('/api/admin/checksession', checkSession);
 
     app.get('/api/admin/allusers', authenticationMiddleware, findAllUsers);
+
     app.get('/api/admin/user/:userid', authenticationMiddleware, findUserById);
     app.post('/api/admin/user', authenticationMiddleware, createUser);
     app.delete('/api/admin/user/:userId', authenticationMiddleware, deleteUser);
     app.put('/api/admin/user/:userId', authenticationMiddleware, updateUser);
-
     app.post("/api/admin/upload/:userid", authenticationMiddleware, upload.single('file'), uploadImage);
+
+    app.get('/api/admin/checksession', checkSession);
 
     function uploadImage(req, res) {
         var userid = req.params.userid + "";
@@ -160,11 +160,6 @@ module.exports = function (app, userModel) {
 
     function authenticationMiddleware(req, res, next) {
 
-        var userid = req.params.userId;
-        /*
-         This is done inorder to check whether the same user
-         is accessing the page requested or not.
-         */
         var userType = !req.user ? "" : req.user.userType + "";
         if(req.isAuthenticated() && userType === "admin")
             next();

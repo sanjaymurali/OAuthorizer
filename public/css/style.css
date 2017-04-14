@@ -240,5 +240,20 @@ img-crop canvas {
     margin: 10px 0 0 0;
 }
 
+/* ============================================================================================================================ */
+/* Profile View Page Styling */
 
-/* Admin View Page Styling */
+.followers {
+    width: 300px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.followers .list-unstyled a{
+    color: red;
+}
+
+.follow-button {
+    position: absolute;
+    margin: 0 auto;
+}

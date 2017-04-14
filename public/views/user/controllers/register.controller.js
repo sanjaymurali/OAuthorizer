@@ -7,10 +7,19 @@
         .module("MainApp")
         .controller("registerController", registerController);
 
-    function registerController(UserService, $state) {
+    function registerController(UserService, $state, $window) {
+
         var vm = this;
 
         function init() {
+            $window.document.title = "Register"; //Way to set the title of a page
+
+            var currentuser = UserService.getUser();
+
+            console.log(currentuser)
+            if(currentuser)
+                $state.go('profile', {uid: currentuser._id});
+
             vm.user = {};
             vm.user.userType = "normalUser"; //Set the initial type of user
             vm.register = register;

@@ -8,7 +8,7 @@
 
 
         function init() {
-            $window.document.title = "Profile";
+            $window.document.title = "Profile Editor";
             var user = {};
             vm.userId = $stateParams['uid'];
             vm.user = UserService.getUser();

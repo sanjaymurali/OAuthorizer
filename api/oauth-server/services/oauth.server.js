@@ -13,10 +13,10 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
     server.serializeClient(serializeClient);
     server.deserializeClient(deserializeClient);
 
-    app.get('/api/oauth2/authorize',  server.authorization(authorizationForServer), authorizeServer);
+    app.get('/api/oauth2/authorize', server.authorization(authorizationForServer), authorizeServer);
     app.post('/api/oauth2/authorize', server.decision());
 
-    app.post('/api/oauth2/token',  passport.authenticate('client-basic', {session: false}), server.token(), server.errorHandler());
+    app.post('/api/oauth2/token', passport.authenticate('client-basic', {session: false}), server.token(), server.errorHandler());
 
 
     function authorizeServer(req, res) {
@@ -28,11 +28,11 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
      user can either choose to "Allow" or "Deny" the request for a client
      to access their data. When the user "Allows" the client, an authorization code
      is generated and is registered in the database.
-     This authorization code must be exhanged for an access token.
+     This authorization code must be exchanged for an access token.
      */
     server.grant(oauth2orize.grant.code(function (client, redirectUri, user, ares, callback) {
         var code = {
-            authCode: Date.now() + "", //make it regenerating using Date.now
+            authCode: Date.now() + "",
             clientId: client.clientId + "",
             redirectUri: redirectUri,
             userId: user._id + ""
@@ -46,7 +46,7 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
     }));
 
     /*
-     The authorization code we recieved, is just to make sure that the user has allowed
+     The authorization code we received, is just to make sure that the user has allowed
      us to access their information, to access their information in our server (us being the
      resource owner), an access token is needed.
      The authorization code is exchanged for an access token, the access token contains
@@ -84,13 +84,11 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
                  Create a new Access token for client authorization when accessing
                  api endpoints
                  */
-                tokenModel
-                    .createToken(token)
-                    .then(function (token) {
-                        callback(null, token);
-                    }, function (err) {
-                        return callback(err);
-                    });
+                tokenModel.createToken(token).then(function (token) {
+                    callback(null, token);
+                }, function (err) {
+                    return callback(err);
+                });
 
             }, function (err) {
                 return callback(err);
@@ -103,13 +101,11 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
 
     function authorizationForServer(clientId, redirectUri, callback) {
         clientId += "";
-        userModel
-            .findUserByClientID(clientId)
-            .then(function (user) {
-                callback(null, user, redirectUri);
-            }, function (err) {
-                return callback(err);
-            });
+        userModel.findUserByClientID(clientId).then(function (user) {
+            callback(null, user, redirectUri);
+        }, function (err) {
+            return callback(err);
+        });
     }
 
 
@@ -132,4 +128,4 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
     }
 
 
-}
+};
