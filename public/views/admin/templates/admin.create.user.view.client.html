@@ -1,4 +1,4 @@
-<nav-header-common userType="Guest"></nav-header-common>
+<nav-header-common userType="admin"></nav-header-common>
 
 <div class="container">
 <h1>Create User | Admin</h1>
@@ -76,13 +76,6 @@
 </form>
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-
-        <div class="navbar-header">
-            <a class="navbar-brand pull-right" ui-sref="about">
-                <span class="glyphicon glyphicon-sunglasses"></span>
-            </a>
-        </div>
-    </div>
-</nav>
+<nav-footer-common
+        uid="{{model.adminUser._id}}">
+</nav-footer-common>

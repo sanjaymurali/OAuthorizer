@@ -12,6 +12,8 @@
 
         function init() {
             vm.user = {};
+
+            vm.adminUser = UserService.getUser();
             vm.user.userType = "normalUser"; //Set the initial type of user
             vm.register = register;
         }
