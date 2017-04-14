@@ -33,10 +33,34 @@ module.exports = function (app, userModel) {
     app.put('/api/user/:userId',authenticationMiddleware, updateUser);
     app.delete('/api/user/:userId',authenticationMiddleware, deleteUser);
 
+    app.get('/api/search', checkSessionMiddleware, search);
+
     //Externally available.
     app.get('/api/oauth/user/:userId', passport.authenticate('code-bearer', {session: false}), findUserByIdOauth);
 
     app.post("/api/upload", upload.single('file'), checkSessionMiddleware, uploadImage);
+
+
+    function search(req, res) {
+
+        var query = req.query.searchquery + "";
+
+        userModel.findUsersByType("appOwner").then(function(owners){
+            var Owner = owners.find(function(owner){
+                return ((owner.appname + "").toLowerCase()) === (query.toLowerCase());
+            });
+
+            if(!Owner){}
+            else {
+                Owner.password = undefined;
+                Owner.secret = undefined;
+            }
+
+            res.status(200).json({owner: Owner});
+        }, function(err){
+            res.sendStatus(500);
+        })
+    }
 
     function uploadImage(req, res) {
         userModel.findUserById(req.user._id).then(function(user){

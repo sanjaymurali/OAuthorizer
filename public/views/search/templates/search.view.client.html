@@ -1,0 +1,42 @@
+<nav-header-common userType="{{model.currentUser.userType}}" uid="{{model.currentUser._id}}"></nav-header-common>
+
+<div class="container">
+    <h1 class="text-center">Search for an App</h1>
+
+    <form ng-submit="model.search(model.query)" role="form">
+        <div class="form-group">
+            <input type="text" placeholder="App Name.." id="query" name="query" class="form-control" ng-model="model.query">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Search</button>
+    </form>
+    <br/>
+
+    <div class="alert alert-danger" ng-if="model.error === true">
+        <strong>Error!</strong> No application with that name.
+    </div>
+    <div ng-if="model.error === false">
+        <span >Details about {{model.query}} : </span>
+        <br/>
+        <br/>
+        <div class="card card-member">
+            <div class="content">
+                <div class="avatar ">
+                    <a ui-sref="app-page({appid: model.application._id})"><img alt="..."
+                                                                         ng-src="{{model.application.profileimage}}"
+                                                                         alt="{{model.application.appname}}"
+                                                                         title="{{model.application.appname}}"/>
+                    </a>
+                </div>
+                <div class="description">
+                    <h3 class="title">{{model.application.appname}}</h3>
+                    <p class="small-text">URL: {{model.application.appurl}}</p>
+                    <p class="description">{{model.application.about}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav-footer-common
+        uid="{{model.currentUser._id}}">
+</nav-footer-common>

@@ -151,6 +151,15 @@
                 controllerAs: 'model',
                 resolve: {loggedIn: loggedIn}
             })
+
+            .state('search', {
+                url: '/search',
+                templateUrl: 'views/search/templates/search.view.client.html',
+                controller: 'searchController',
+                controllerAs: 'model',
+                resolve: {checkSession: checkSession}
+            })
+
             .state('admin', {
                 url: '/admin',
                 templateUrl: 'views/admin/templates/admin.view.client.html',

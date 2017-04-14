@@ -21,6 +21,7 @@
                 <!-- all users -->
                 <li ui-sref-active="active" ng-if="user || appOwner || admin"><a ui-sref="all-apps">All Apps</a></li>
                 <li ui-sref-active="active" ng-if="user || appOwner || admin"><a ui-sref="profile-edit({uid: userid})">Profile Edit</a></li>
+                <li ui-sref-active="active" ng-if="user || appOwner || admin"><a ui-sref="search">Search</a></li>
 
                 <!-- admin -->
                 <li ui-sref-active="active" ng-if="admin"><a ui-sref="admin">Admin</a></li>

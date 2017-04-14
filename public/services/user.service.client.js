@@ -26,6 +26,7 @@
             "checkSession": checkSession,
             "loggedIn": loggedIn,
             "register": register,
+            "search": search,
             "getUser": getUser,
             "setUser": setUser
         };
@@ -69,6 +70,10 @@
 
         function findUsersByType(usertype) {
             return $http.get(apiURL + 'user', {params: {usertype: usertype}});
+        }
+
+        function search(query) {
+            return $http.get(apiURL + 'search', {params: {searchquery: query}});
         }
 
         function login(user) {

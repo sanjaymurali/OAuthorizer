@@ -33,17 +33,19 @@ module.exports = function () {
             appname: String,
             about: String,
             appurl: String,
-            registeredUsers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
             secret: String,
             clientId: String,
             redirectUri: String
         }, options));
 
     UserModel.discriminator('normalUser', new mongoose.Schema({
-        registeredApps: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+        followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+        following: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}]
     }, options));
 
     UserModel.discriminator('admin', new mongoose.Schema({
+        followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
+        following: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}]
     }, options));
 
     return api;
