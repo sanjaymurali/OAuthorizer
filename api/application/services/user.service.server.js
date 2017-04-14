@@ -8,7 +8,7 @@ module.exports = function (app, userModel) {
     var path = require('path');
     var passport = require('passport');
     var bcrypt = require("bcrypt-nodejs");
-    var upload = multer({storage: storage});
+
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -18,6 +18,8 @@ module.exports = function (app, userModel) {
             cb(null, path.basename(file.originalname, path.extname(file.originalname)) + "_" + Date.now() + path.extname(file.originalname));
         }
     });
+
+    var upload = multer({storage: storage});
 
     app.post('/api/login', passport.authenticate('user-local'), login);
     app.post('/api/register', register);

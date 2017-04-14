@@ -8,7 +8,6 @@ module.exports = function (app, userModel) {
     var path = require('path');
     var passport = require('passport');
     var bcrypt = require("bcrypt-nodejs");
-    var upload = multer({storage: storage});
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -19,7 +18,7 @@ module.exports = function (app, userModel) {
         }
     });
 
-
+    var upload = multer({storage: storage});
 
     app.get('/api/admin/allusers', authenticationMiddleware, findAllUsers);
 
