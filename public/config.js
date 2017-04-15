@@ -109,7 +109,10 @@
             })
             .state('about', {
                 url: '/aboutus',
-                templateUrl: 'views/landing/templates/about.us.view.client.html'
+                templateUrl: 'views/landing/templates/about.us.view.client.html',
+                controller: 'guestController',
+                controllerAs: 'model',
+                resolve: {guestLogin: guestLogin}
             })
             .state('login', {
                 url: '/login',

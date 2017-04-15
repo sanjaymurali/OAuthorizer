@@ -49,7 +49,6 @@ module.exports = function (app, userModel) {
         var currentUserId = currentUser.userid;
         var followingId = followingUser.userid;
 
-        console.log(currentUserId, followingId);
 
         userModel.findUserById(currentUserId).then(function(user){
             if(!user)
@@ -93,7 +92,6 @@ module.exports = function (app, userModel) {
         var currentUserId = followData.currentUserId + "";
         var followingId = followData.followingId + "";
 
-        console.log(currentUserId, followingId);
 
         userModel.findUserById(currentUserId).then(function(user){
             if(!user)
@@ -103,7 +101,6 @@ module.exports = function (app, userModel) {
                     return (userid.userid + "") === followingId;
                 }));
 
-                console.log(index)
 
                 user.following.splice(index, 1);
 

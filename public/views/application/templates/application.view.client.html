@@ -2,7 +2,9 @@
 
 <div class="container">
     <h1>App Owner</h1>
-    <img ng-src="{{model.user.profileimage}}" width="300px">
+    <img ng-src="{{model.user.profileimage}}"
+         width="300px"
+         onerror="this.src='https://placehold.it/200?text=No+Image'">
     <br/>
     App Name: {{model.user.appname}}<br/>
     App URL: {{model.user.appurl}}

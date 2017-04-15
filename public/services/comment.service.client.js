@@ -19,8 +19,6 @@
         };
         return api;
 
-
-
         function createComment(comment) {
             return $http.post(apiURL + 'comment', comment);
         }

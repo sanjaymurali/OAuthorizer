@@ -25,6 +25,10 @@
 
                 <!-- admin -->
                 <li ui-sref-active="active" ng-if="admin"><a ui-sref="admin">Admin</a></li>
+
+                <!-- Logout -->
+                <li ui-sref-active="active" ng-if="user || appOwner || admin"><a href="" ng-click="model.logout()">Logout</a></li>
+
             </ul>
 
         </div>

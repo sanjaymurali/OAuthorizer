@@ -1,6 +1,5 @@
 <nav-header-common userType="{{model.currentUser.userType}}" uid="{{model.currentUser._id}}"></nav-header-common>
 
-
     <div class="container">
         <h3>{{model.user.username}}'s Profile</h3>
 
@@ -9,7 +8,8 @@
         <img ng-src="{{model.user.profileimage}}"
              title="{{model.user.username}}"
              class="img-circle"
-             alt="{{model.user.username}}'s Profile Image" />
+             alt="{{model.user.username}}'s Profile Image"
+             onerror="this.src='https://placehold.it/200?text=No+Image'"/>
         </div>
         <br/>
 

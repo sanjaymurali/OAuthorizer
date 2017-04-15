@@ -1,5 +1,107 @@
-<nav-header-common userType="Guest"></nav-header-common>
+<nav-header-common userType="{{model.user.userType}}" uid="{{model.user._id}}"></nav-header-common>
 
+
+<div class="container">
+    <span>
+    This WebApp is submitted as part of the project for CS 5610 Web Development.
+    <br/>
+    <br/>
+    The Tech stack used for the Project is:
+    <br/>
+    <ol>
+        <li>DATABASE: MongoDB</li>
+        <li>NodeJS as Server</li>
+        <li>ExpressJS as Framework for building API</li>
+        <li>Bootstrap for building a rich UI interface</li>
+        <li>AngularJS for seameless routing and state persistence in the frontend</li>
+        <li>MongooseJS as the ODM.</li>
+    </ol>
+
+    Internal Details and Citation:
+    <ol>
+        <li>Angular UI-Router for routing</li>
+        <li>BodyParser for parsing the request body/headers</li>
+        <li>The Theme used for building the website is 'FLATLY'. Link: <a href="https://bootswatch.com/flatly/" target="_blank">Flatly</a></li>
+        <li>OAuth 2.0 implemented using OAuth2orize</li>
+    </ol>
+        </span>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        How to use (For a Normal User)
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <ol>
+                        <li><a ui-sref="register" target="_blank">Register</a> in OAuthorizer</li>
+                        <li>Update your profile to reflect your latest information</li>
+                        <li>Visit the web application/service which you want to use</li>
+                        <li>Go to the Login page of the application</li>
+                        <li>While logging in click on the button which says "Login with Sanjay's Website"</li>
+                        <li>You will be redirected to the login page of OAuthorize</li>
+                        <li>Login into OAuthorize</li>
+                        <li>You will be asked to "Allow" or "Deny" permission for the application to use your profile data</li>
+                        <li>If you "Deny" , you will be redirected to the OAuthorize login page.</li>
+                        <li>If you choose to "Accept" , means you have authorized the application/service to access your profile data on your behalf</li>
+                        <li>You are taken to the application/service, where you would be able to see your profile data.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        How to use (For an Application Owner)
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <ol>
+                        <li><a ui-sref="register" target="_blank">Register</a> in OAuthorizer as an "App Owner"</li>
+                        <li>Update your profile to reflect your latest information</li>
+                        <li>Make sure your "Application Specific" settings are upto date.</li>
+                        <li>The Client ID, Secret and RedirectURI are very important and they must reflect the latest information</li>
+                        <li>Place a button which says "Login with Sanjay's website" in your login page</li>
+                        <li>
+                            Implement a service on the server side, which redirects to OAuthorize with your ClientID and RedirectURI
+                        <br/>Note: These must be exactly similar to the ones you have configured here!
+                        </li>
+                        <li>
+                            Implement a Callback service which takes care of the RedirectURI, Use the Authorization Code
+                            you received from OAuthorizer as a Bearer token to get your access token from OAuthorizer
+                        </li>
+                        <li>
+                            Now that you have got the Access token, you can get the user's profile data from 'api/oauth/user/< userid >'
+                            by making a request to OAuthorizer with your Client ID and secret as username and password for
+                            a Basic Authentication by passing them in the Authentication header.
+                        </li>
+                        <li>
+                            You will receive all the user's information that the user was ready to share with you.
+                            Use wisely. With great power comes great responsibility!
+                        </li>
+                        <li>
+                            Enjoy hassel free authentication!
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    For Any queries contact: <a href="mailto:murali.s@husky.neu.edu">Sanjay Murali</a>
+    <br/>
+    <br/>
+
+
+</div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">

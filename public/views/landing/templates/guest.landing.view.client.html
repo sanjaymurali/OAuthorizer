@@ -5,6 +5,9 @@
         <div class="jumbotron">
             <h1>Hello!</h1>
             <p>Please consider registering in our site.</p>
+            With the help of OAuthorizer, you would be able to login anywhere in the
+            internet without ever registering again! Sounds cool right?
+            <br/><br/>
             <p><a class="btn btn-primary btn-lg" ui-sref="register" role="button">Register &raquo;</a></p>
         </div>
     </div>
@@ -13,8 +16,100 @@
 
 <div ng-if="model.guestConfirm === false">
     <div class="container">
-        Hey {{model.user.username}}!
+
+
+        <div ng-if="model.user.userType === 'normalUser'">
+
+            <div class="jumbotron jumbotron-text-size">
+                <h2>Hey {{model.user.username}}! <br/> Welcome to OAuthorizer!</h2>
+
+                    With the help of OAuthorizer, you would be able to login anywhere in the
+                    internet without ever registering again! Sounds cool right?
+                    <br/>
+                <br/>
+                <p class="text-success">Your OAuthorizer credentials can be used to access various services across
+                    the internet and the most awesome part of it all is if you decide to change
+                    your profile image or email or password for that matter, it would be in sync
+                    in all the other web applications where you have used OAuthorizer to signup!
+                </p>
+
+                    OAuthorizer uses industry standard password encryption to keep your account safe
+                    and you could also choose how much information you want to share it with a service!
+            </div>
+
+            <div class="landing landing-user">
+                <div class="content">
+                    <div class="author">
+                        <a ui-sref="profile({uid: model.user._id})">
+                            <img class="avatar border-gray"
+                                 ng-src="{{model.user.profileimage}}"
+                                 alt="{{model.user.username}}"
+                                 onerror="this.src='https://placehold.it/200?text=No+Image'"/>
+
+                            <h4 class="title">
+                                {{model.user.firstName + " " + model.user.lastName}}<br />
+                                <small>{{model.user.username}}</small>
+                            </h4>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+
+                    <ul class="text-center list-unstyled list-inline">
+                        <li><a href="#">Followers <span class="badge">{{model.user.followers.length}}</span></a></li>
+                        <li><a href="#">Following <span class="badge">{{model.user.following.length}}</span></a></li>
+                    </ul>
+
+            </div>
+
+        </div>
+        <div ng-if="model.user.userType === 'appOwner'">
+
+            <div class="jumbotron jumbotron-text-size">
+                <h2>Hey {{model.user.username}}! <br/> Welcome to OAuthorizer!</h2>
+
+                With the help of OAuthorizer, you would be able to implement authentication
+                seamelessly in your current syste,
+                <br/>
+                <br/>
+                <p class="text-success">
+                    Just a few lines of code and you are up and running with User authentication.
+                    Yup, that easy!
+                </p>
+
+                Please setup your account with <span class="text-danger">"Application Specific"</span>
+                information and you are done with the configuration!
+            </div>
+
+            <div class="landing landing-user">
+                <div class="content">
+                    <div class="author">
+                        <a ui-sref="profile({uid: model.user._id})">
+                            <img class="avatar border-gray"
+                                 ng-src="{{model.user.profileimage}}"
+                                 alt="{{model.user.username}}"
+                                 onerror="this.src='https://placehold.it/200?text=No+Image'"/>
+
+                            <h4 class="title">
+                                {{model.user.appname}}<br />
+                                <small>{{model.user.username}}</small>
+                            </h4>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+
+                <ul class="text-center list-unstyled list-inline">
+                    <li>About: {{model.user.about}}</li>
+                </ul>
+
+            </div>
+
+        </div>
+
     </div>
+
+
 </div>
 
 </div>

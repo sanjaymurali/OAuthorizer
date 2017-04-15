@@ -5,8 +5,6 @@
         Nothing to Show!
     </div>
 
-
-    <div class="">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="row">
@@ -14,14 +12,16 @@
                         <div class="card card-member">
                             <div class="content">
                                 <div class="avatar ">
-                                    <a ui-sref="app-page({appid: application._id})"><img alt="..."
-                                         ng-src="{{application.profileimage}}"
-                                         alt="{{application.appname}}"
-                                         title="{{application.appname}}"/>
+                                    <a ui-sref="app-page({appid: application._id})">
+                                        <img alt="{{application.appname}}"
+                                             ng-src="{{application.profileimage}}"
+                                             alt="{{application.appname}}"
+                                             title="{{application.appname}}"
+                                             onerror="this.src='https://placehold.it/200?text=No+Image'"/>
                                     </a>
                                 </div>
                                 <div class="description">
-                                    <h3 class="title">{{application.appname}}</h3>
+                                    <h3 class="title"><a ui-sref="app-page({appid: application._id})">{{application.appname}}</a></h3>
                                     <p class="small-text">URL: {{application.appurl}}</p>
                                     <p class="description">{{application.about}}</p>
                                 </div>
@@ -31,7 +31,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
 </div>
 

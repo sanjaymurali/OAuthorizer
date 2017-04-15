@@ -26,7 +26,6 @@
 
             UserService.findUserById(vm.userId).then(function (response){
                 vm.user = response.data.user;
-                console.log(vm.user.profileimage)
                 if(vm.user) {
                     if(vm.user.userType === "appOwner")
                         $state.go('app-page', {appid: vm.userId});
@@ -83,7 +82,6 @@
             UserService
                 .followUser(currentUser, followingUser)
                 .then(function(response) {
-                    console.log(response);
                     if(response.statusText === "OK") {
                         if(!vm.user.followers){
                             vm.user.followers = []
@@ -91,12 +89,10 @@
                         vm.user.followers.push(currentUser);
                         vm.followUser = false;
                         vm.unFollowUser = true;
-                        console.log(vm.user);
                     }
                 }, function(err){
                     vm.followUser = true;
                     vm.unFollowUser = false;
-                    console.log(err);
                 });
         }
 
@@ -118,7 +114,6 @@
                 }, function(err){
                     vm.followUser = false;
                     vm.unFollowUser = true;
-                    console.log(err);
                 });
         }
 
