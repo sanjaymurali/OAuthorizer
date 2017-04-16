@@ -129,6 +129,124 @@
 
         </div>
 
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        How to test the System?
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body">
+                    <span class="text-danger">Testing User Login/Registration</span>
+                    <ol>
+                        <li>Register in OAuthorizer or you could use one of the logins I have provided (above)</li>
+                        <li>Go to <a ui-sref="login">Login</a> and enter your username and password</li>
+                        <li>You would be taken to the Public Profile page for your user</li>
+                        <li>You would be able to see a brief info about your user.</li>
+                    </ol>
+
+                    <span class="text-danger">Seeing all the Applications available in the Marketplace</span>
+                    <ol>
+                        <li>Go to the All Apps page (link available in Navbar Menu)</li>
+                        <li>You would be able to see a list of apps I have created</li>
+                        <li>These are the applications that are registered for our services for OAuth</li>
+                    </ol>
+
+                    <span class="text-danger">Searching for an Application on the "Search Page"</span>
+                    <ol>
+                        <li>Do you have a specific App in your mind? and want to see whether its available in the marketplace?</li>
+                        <li>Go to the Search Page (Link on your navbar)</li>
+                        <li>Type the name of the Application and search for it.</li>
+                        <li>If available, The result would be the Application itself, or it would throw an error</li>
+                    </ol>
+
+                    <span class="text-danger">Profile Page Edit</span>
+
+                    <ol>
+                        <li>If at some point in time , you want to edit your profile, go to the Profile Edit page (Link on Navbar)</li>
+                        <li>You can choose to edit any/all of your information</li>
+                    </ol>
+
+                    <span class="text-danger">Viewing details of an Application on OAuthorizer</span>
+                    <ol>
+                        <li>Go to the All Apps Page (Link on navbar)</li>
+                        <li>Click on any of the Application whose details you want to see</li>
+                        <li>This would take you to the details page of the app.</li>
+                    </ol>
+
+                    <span class="text-danger">Review/Rate an Application</span>
+                    <ol>
+                        <li>You can review an application by posting a comment with your rating for the app</li>
+                        <li>Every user comments/reviews the app only once.</li>
+                    </ol>
+
+                    <span class="text-danger">Edit your Review for an Application</span>
+                    <ol>
+                        <li>If at some point in time you decided to change the rating for an application you just gave, You can edit it.</li>
+                        <li>Click on the Cog icon next to your comment and click on "Edit Comment" </li>
+                        <li>Doing this would automatically open up a form with your previous comment on it filled for you</li>
+                        <li>Edit your comment and the rating click on "Edit Comment" to update your comment</li>
+                    </ol>
+
+                    <span class="text-danger">Deleting a comment</span>
+                    <ol>
+                        <li>If you wish to delete a comment you previously wrote, you can do it</li>
+                        <li>Click on the Cog icon next to your comment and click on "Delete Comment"</li>
+                    </ol>
+
+                    <span class="text-danger">Following another User</span>
+                    <ol>
+                        <li>You can have a look at the User by clicking on their Username on the comment that they posted for an application</li>
+                        <li>If you find that the you and the user have common interest, you can follow them</li>
+                        <li>To follow the user, visit their public page on OAuthorizer by clicking on their username</li>
+                        <li>Click on the "Follow XXXX" button and Voila you have followed them!</li>
+                    </ol>
+
+                    <span class="text-danger">Unfollowing User</span>
+                    <ol>
+                        <li>You can have a look at the User by click on their Username on the comment that they posted for an application</li>
+                        <li>To unfollow the user, visit their public page on OAuthorizer by clicking on their username</li>
+                        <li>Click on the "Unfollow XXXX" button</li>
+                    </ol>
+
+                    <span class="text-danger">Checking Your followers</span>
+                    <ol>
+                        <li>Go to your Public Page by click on "Public Profile" (link on navbar)</li>
+                        <li>Here under the "Followers" tab you can see a list of users who follow you</li>
+                        <li>Under the "Following" tab, you can see a list of users whom you follow</li>
+                    </ol>
+
+                    <span class="text-danger">Login into Client-1</span>
+                    <ol>
+                        <li>Go to <a href="https://webdev-client-1.herokuapp.com/" target="_blank">Webdev-Client-1</a> website</li>
+                        <li>Instead of registering, click on "Login with Sanjay's Website"</li>
+                        <li>You will be redirected to OAuthorizer for login</li>
+                        <li>Login with one the Users I provided or with the one you registered in OAuthorizer</li>
+                        <li>You will be asked to "Allow" or "Deny"</li>
+                        <li>If you "Deny" , you will be redirected to the OAuthorize login page.</li>
+                        <li>If you choose to "Accept" , means you have authorized the application/service to access your profile data on your behalf</li>
+                        <li>You will be taken to the application/service, where you would be able to see your profile data.</li>
+                    </ol>
+
+                    <span class="text-danger">Login into Client-2</span>
+                    <ol>
+                        <li>Go to <a href="https://webdev-client-2.herokuapp.com/" target="_blank">Webdev-Client-2</a> website</li>
+                        <li>Instead of registering, click on "Login with Sanjay's Website"</li>
+                        <li>You will be redirected to OAuthorizer for login</li>
+                        <li>Login with one the Users I provided or with the one you registered in OAuthorizer</li>
+                        <li>You will be asked to "Allow" or "Deny"</li>
+                        <li>If you "Deny" , you will be redirected to the OAuthorize login page.</li>
+                        <li>If you choose to "Accept" , means you have authorized the application/service to access your profile data on your behalf</li>
+                        <li>You will be taken to the application/service, where you would be able to see your profile data.</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
 
 

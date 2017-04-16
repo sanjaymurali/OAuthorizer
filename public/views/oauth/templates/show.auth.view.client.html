@@ -1,5 +1,7 @@
-<div ng-if="model.showLogin === false" class="container">
-<p>Hi {{model.currentUser.username}}!</p>
+<div ng-if="model.showLogin === false" >
+    <nav-header-common userType="{{model.currentUser.userType}}" uid="{{model.currentUser._id}}"></nav-header-common>
+    <div class="container">
+    <p>Hi {{model.currentUser.username}}!</p>
 <p><b>{{model.clientname}}</b> is requesting <b>full access</b> to your account.</p>
 <p>Do you approve?</p>
 
@@ -12,6 +14,7 @@
         </a>
 
 </form>
+</div>
 </div>
 
 <div ng-if="model.showLogin" id="oauth-login" class="container">

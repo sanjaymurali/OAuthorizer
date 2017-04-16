@@ -8,6 +8,7 @@
             With the help of OAuthorizer, you would be able to login anywhere in the
             internet without ever registering again! Sounds cool right?
             <br/><br/>
+            <span class="text-success">For TAs</span>
             For Login related information, Click here: <a href="" ui-sref="about">Link</a>
             <br/><br/>
             <p><a class="btn btn-primary btn-lg" ui-sref="register" role="button">Register &raquo;</a></p>
@@ -20,7 +21,7 @@
     <div class="container">
 
 
-        <div ng-if="model.user.userType === 'normalUser'">
+        <div ng-if="model.user.userType === 'normalUser' || model.user.userType === 'admin' ">
 
             <div class="jumbotron jumbotron-text-size">
                 <h2>Hey {{model.user.username}}! <br/> Welcome to OAuthorizer!</h2>
@@ -37,6 +38,9 @@
 
                     OAuthorizer uses industry standard password encryption to keep your account safe
                     and you could also choose how much information you want to share it with a service!
+                <br/><br/>
+                <span class="text-danger">For TAs</span><br/>
+                For Login related information, Click here: <a href="" ui-sref="about">Link</a>
             </div>
 
             <div class="landing landing-user">
@@ -81,6 +85,9 @@
 
                 Please setup your account with <span class="text-danger">"Application Specific"</span>
                 information and you are done with the configuration!
+                <br/><br/>
+                <span class="text-danger">For TAs</span><br/>
+                For Login related information, Click here: <a href="" ui-sref="about">Link</a>
             </div>
 
             <div class="landing landing-user">
