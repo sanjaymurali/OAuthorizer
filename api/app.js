@@ -4,6 +4,8 @@
 
 module.exports = function (app) {
 
+
+
     var userModels = require('./application/model/models.server.js')();
 
     var oauthModels = require('./oauth-server/model/models.server.js')();

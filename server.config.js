@@ -12,7 +12,14 @@ module.exports = function(app) {
 
     app.use(require('express-favicon-short-circuit'));
 
-    app.use(cors());
+    var corsOptions = {
+        credentials: true,
+        origin: function (origin, callback) {
+            callback(null, true)
+        }
+    };
+
+    app.use(cors(corsOptions));
     app.use(cookieParser());
     var bodyParser = require('body-parser');
     app.use(bodyParser.json());
