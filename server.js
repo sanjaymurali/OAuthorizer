@@ -19,20 +19,6 @@ app.all('/*', function (req, res, next) {
     res.sendFile('index.html', {root: 'public'});
 });
 
-/* Angular 2+ */
-
-/*app.use(express.static(__dirname + '/dist'));
-
-//Used to setup the client
-app.use('/js', express.static(__dirname + '/dist/js'));
-app.use('/css', express.static(__dirname + '/dist/css'));
-app.use('/views', express.static(__dirname + '/dist/views'));
-
-app.all('/*', function (req, res, next) {
-    // Just send the index.html for other files to support HTML5Mode
-    res.sendFile('index.html', {root: 'dist'});
-});*/
-
 var port = process.env.PORT || 3000;
 
 app.listen(port);
