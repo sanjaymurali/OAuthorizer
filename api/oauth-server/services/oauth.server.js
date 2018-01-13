@@ -1,7 +1,6 @@
-/**
- * Created by sanjaymurali on 4/10/17.
+/***
+ * Sets up the route for the OAuth 2.0 Server.
  */
-
 module.exports = function (app, userModel, codeModel, tokenModel) {
 
     var oauth2orize = require('oauth2orize');
@@ -18,10 +17,6 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
 
     app.post('/api/oauth2/token', passport.authenticate('client-basic', {session: false}), server.token(), server.errorHandler());
 
-
-    function authorizeServer(req, res) {
-        res.json({transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client});
-    }
 
     /*
      The Grant method helps us generate a mechanism in which the
@@ -98,6 +93,10 @@ module.exports = function (app, userModel, codeModel, tokenModel) {
         });
     }));
 
+
+	function authorizeServer(req, res) {
+		res.json({transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client});
+	}
 
     function authorizationForServer(clientId, redirectUri, callback) {
         clientId += "";

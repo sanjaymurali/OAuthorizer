@@ -1,7 +1,7 @@
-/**
- * Created by sanjaymurali on 3/20/17.
+/***
+ *
+ * @returns {{userModel: api, commentModel: api}}
  */
-
 module.exports = function () {
 
     var userModel = require('./user/user.model.server');

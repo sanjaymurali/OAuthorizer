@@ -1,9 +1,11 @@
+/***
+ * Entry point for the app
+ */
 var express = require('express');
-
 var app = express();
 
-require('./server.config')(app);
-require("./api/app.js")(app);
+require('./server.config')(app); // config file for the backend
+require("./api/app.js")(app); // contains routes for the backend api
 
 /* Angular 1.5 */
 

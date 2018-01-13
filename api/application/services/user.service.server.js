@@ -162,7 +162,6 @@ module.exports = function (app, userModel) {
 
 
     function loggedIn(req, res) {
-        console.log("Session 2")
         var userid = req.query.userid;
         var user = {};
         /*
@@ -183,9 +182,7 @@ module.exports = function (app, userModel) {
     }
 
     function checkSession(req, res) {
-        console.log("Session 3")
         var user = {};
-        console.log(req.isAuthenticated())
         if(req.isAuthenticated()) {
             user = req.user;
             user.password = undefined;
@@ -418,7 +415,6 @@ module.exports = function (app, userModel) {
     }
 
     function checkSessionOrLoggedIn(req, res) {
-        console.log("Session 1")
         if(req.query.userid)
             loggedIn(req, res);
         else
